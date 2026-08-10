@@ -1,0 +1,43 @@
+{
+  "pdf_path": "sample_reports/sample_lipid_panel.pdf",
+  "metadata": {
+    "patient_name": "Jane Smith",
+    "report_date": "2026-08-05",
+    "panel_type": "Lipid Panel",
+    "ordering_physician": "Dr. Sarah Jenkins, MD",
+    "lab_id": "LAB-2026-8841"
+  },
+  "test_items": [
+    {
+      "test_name": "Total Cholesterol",
+      "value": 245.0,
+      "unit": "mg/dL",
+      "reference_range": "125 - 200",
+      "flag": "HIGH"
+    },
+    {
+      "test_name": "HDL (Good Cholesterol)",
+      "value": 38.0,
+      "unit": "mg/dL",
+      "reference_range": "> 40",
+      "flag": "LOW"
+    },
+    {
+      "test_name": "LDL (Bad Cholesterol)",
+      "value": 162.0,
+      "unit": "mg/dL",
+      "reference_range": "< 100",
+      "flag": "HIGH"
+    },
+    {
+      "test_name": "Triglycerides",
+      "value": 210.0,
+      "unit": "mg/dL",
+      "reference_range": "< 150",
+      "flag": "HIGH"
+    }
+  ],
+  "total_tests": 4,
+  "abnormal_count": 4,
+  "raw_text": "MEDEXPLAIN DIAGNOSTICS & LAB SERVICES\n108 Healthcare Blvd, Suite 400 | Patient Clinical Report\nPatient Name: Jane Smith\nReport Date: 2026-08-05\nPanel Type: Lipid Panel\nOrdering Physician: Dr. Sarah Jenkins, MD\nStatus: Completed\nLab ID: LAB-2026-8841\nTest Description\nResult Value\nUnits\nReference Interval\nFlag\nTotal Cholesterol\n245\nmg/dL\n125 - 200\nHIGH\nHDL (Good Cholesterol)\n38\nmg/dL\n> 40\nLOW\nLDL (Bad Cholesterol)\n162\nmg/dL\n< 100\nHIGH\nTriglycerides\n210\nmg/dL\n< 150\nHIGH\nNotice: This lab report contains preliminary clinical data. Please consult your physician for definitive diagnosis.\n"
+}

@@ -1,0 +1,311 @@
+--- Page 1 ---
+Assignment Brief – Individual AI Security Audit and Vulnerability Assessment 
+Information Retrieval and Web Analytics (IT3041) 
+Lecturer in Charge: 
+Mr. Samadhi Chathuranga Rathnayake 
+Assignment Overview 
+Building an intelligent AI system is only one aspect of modern software engineering. Before 
+deployment, every AI system must undergo rigorous security, privacy, ethical, and reliability 
+evaluations to ensure that it behaves safely under both normal and adversarial conditions. 
+This assignment requires each student to independently perform a professional vulnerability 
+assessment of the Agentic AI system developed during the group assignment. Students 
+will act as AI Security Analysts (Red Team Members) and evaluate the system from a 
+designated security perspective. 
+The objective is not to redesign or improve the existing system, but to critically assess its 
+robustness by identifying vulnerabilities, evaluating associated risks, and recommending 
+appropriate mitigation strategies. 
+Each student will submit an independent AI Vulnerability Assessment Report and defend 
+their findings during an individual viva examination. 
+ 
+Learning Objectives 
+Upon successful completion of this assignment, students should be able to: 
+• 
+Perform systematic security evaluations of AI systems.  
+• 
+Apply AI Red Teaming techniques to identify system vulnerabilities.  
+• 
+Assess AI systems against Responsible AI principles.  
+• 
+Evaluate the robustness of Large Language Model (LLM)-based applications.  
+• 
+Conduct structured risk assessments.  
+• 
+Recommend practical mitigation strategies.  
+• 
+Produce professional vulnerability assessment reports.  
+ 
+Assignment Structure 
+The same project groups formed for the Group Assignment will be used. 
+Each student within a group will be assigned one primary evaluation specialization by the 
+lecturer. While each student will focus on a different specialization, every student is 
+expected to understand the complete system architecture and operation. 
+Each student must independently perform all required testing related to the assigned 
+specialization and prepare an individual report. 
+ 
+Individual Evaluation Specializations 
+Student 1 
+
+--- Page 2 ---
+Prompt Injection and Jailbreak Analysis 
+Evaluate the AI system against prompt-based attacks. 
+Suggested evaluation areas include: 
+• 
+Prompt Injection  
+• 
+Jailbreak Attempts  
+• 
+Prompt Leakage  
+• 
+Instruction Override  
+• 
+Prompt Manipulation  
+• 
+Prompt Robustness  
+Expected outcome: 
+A professional vulnerability assessment identifying prompt-related weaknesses and 
+recommended countermeasures. 
+ 
+Student 2 
+Privacy and Data Leakage Assessment 
+Evaluate the protection of user data and confidential information. 
+Suggested evaluation areas include: 
+• 
+Sensitive Information Leakage  
+• 
+Personally Identifiable Information (PII) Exposure  
+• 
+Conversation Memory Leakage  
+• 
+Authentication Weaknesses  
+• 
+User Data Protection  
+• 
+Privacy Compliance  
+Expected outcome: 
+A professional privacy and data protection assessment. 
+ 
+Student 3 
+Responsible AI and Bias Assessment 
+Evaluate the ethical behaviour of the AI system. 
+Suggested evaluation areas include: 
+• 
+Hallucinations  
+• 
+Bias  
+• 
+Toxic Responses  
+• 
+Fairness  
+• 
+Transparency  
+• 
+Explainability  
+• 
+Harmful Content Generation  
+Expected outcome: 
+
+--- Page 3 ---
+A Responsible AI compliance and vulnerability assessment. 
+ 
+Student 4 
+Information Retrieval and Security Assessment 
+Evaluate the security and reliability of the Information Retrieval components. 
+Suggested evaluation areas include: 
+• 
+Retrieval Accuracy  
+• 
+Retrieval Manipulation  
+• 
+Hallucination due to Retrieval  
+• 
+Source Reliability  
+• 
+Authentication  
+• 
+Authorization  
+• 
+API Security  
+• 
+Communication Protocol Security  
+Expected outcome: 
+A technical security assessment of the Information Retrieval pipeline. 
+ 
+Testing Requirements 
+Each student must perform a minimum of 15 independent test cases related to the 
+assigned specialization. 
+Each test case should clearly include: 
+• 
+Test Objective  
+• 
+Input / Attack Scenario  
+• 
+Expected Behaviour  
+• 
+Actual Behaviour  
+• 
+Evidence (Screenshots or Logs)  
+• 
+Observations  
+• 
+Conclusion  
+Risk Classification 
+Each identified vulnerability must be classified using one of the following severity levels: 
+• 
+Critical  
+• 
+High  
+• 
+Medium  
+• 
+Low  
+• 
+Informational  
+Students must provide clear technical justification for every assigned severity level. 
+ 
+Individual Deliverables 
+
+--- Page 4 ---
+Each student must submit independently. 
+ 
+1. Vulnerability Assessment Report (80 Marks) 
+The report should include the following sections: 
+Executive Summary 
+Provide a brief overview of the assessment, objectives, and major findings. 
+Scope of Testing 
+Describe: 
+• 
+System evaluated  
+• 
+Assigned specialization  
+• 
+Components evaluated  
+• 
+Scope limitations  
+Evaluation Methodology 
+Describe: 
+• 
+Testing methodology  
+• 
+Evaluation process  
+• 
+Tools used  
+• 
+Testing environment  
+• 
+Evaluation criteria  
+Test Cases Performed 
+Document all test cases with supporting evidence. 
+Each test case should include: 
+• 
+Test ID  
+• 
+Objective  
+• 
+Input  
+• 
+Expected Result  
+• 
+Actual Result  
+• 
+Evidence  
+• 
+Outcome  
+Vulnerabilities Identified 
+For each identified vulnerability include: 
+• 
+Vulnerability Description  
+• 
+Evidence  
+• 
+Impact  
+• 
+Likelihood  
+• 
+Severity  
+• 
+Risk Level  
+• 
+Technical Explanation  
+
+--- Page 5 ---
+Risk Assessment 
+Summarize all identified vulnerabilities using a risk matrix. 
+Example: 
+Vulnerability 
+Impact Likelihood Risk Level 
+Prompt Injection High 
+High 
+Critical 
+Mitigation Strategies 
+Recommend practical solutions for each identified vulnerability. 
+Reflection 
+Briefly discuss: 
+• 
+Challenges encountered  
+• 
+Lessons learned  
+• 
+Recommendations for future improvements  
+ 
+2. Individual Viva (20 Marks) 
+Students will be required to explain: 
+• 
+The testing methodology used.  
+• 
+The rationale behind the selected test cases.  
+• 
+Why attacks succeeded or failed.  
+• 
+The technical reasoning behind identified vulnerabilities.  
+• 
+Justification of the assigned risk levels.  
+• 
+Proposed mitigation strategies.  
+• 
+Responsible AI implications.  
+ 
+Required Testing Evidence 
+Students should perform at least 15 different test cases within their assigned 
+specialization. 
+Examples include: 
+Student 1 
+• 
+15 prompt injection or jailbreak attempts.  
+Student 2 
+• 
+15 privacy or data leakage scenarios.  
+Student 3 
+• 
+15 Responsible AI, bias, or hallucination evaluations.  
+Student 4 
+• 
+15 Information Retrieval or security evaluations.  
+Screenshots, logs, or other supporting evidence must be included in the report. 
+ 
+Assessment Breakdown 
+
+--- Page 6 ---
+Component 
+Marks 
+Vulnerability Assessment Report 80 
+Individual Viva 
+20 
+Total 
+100 
+ 
+Report Evaluation Rubric (80 Marks) 
+Criteria 
+Marks 
+Testing Methodology and Coverage 
+20 
+Quality of Vulnerability Analysis 
+25 
+Risk Assessment and Severity Classification 
+15 
+Mitigation Strategies 
+10 
+Report Quality, Evidence, and Technical Writing 10 
+Total 
+80 
+ 
+

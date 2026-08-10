@@ -1,0 +1,149 @@
+--- Page 1 ---
+Assignment Brief – Agentic AI-Based System Development 
+Information Retrieval and Web Analytics (IT 3041) 
+Lecturer in Charge- 
+Mr. Samadhi Chathuranga Rathnayake 
+ 
+Assignment Title: 
+Design and Implementation of an Agentic AI System Integrating LLMs, NLP, Security, 
+and Information Retrieval 
+ 
+Assignment Overview 
+You are required to collaboratively design and build a multi-agent AI-based system that 
+demonstrates agentic behavior, integrating: 
+• 
+Large Language Models (LLMs) 
+• 
+Natural Language Processing (NLP) 
+• 
+Information Retrieval (IR) 
+• 
+Security Features 
+• 
+Agent Communication Protocols (e.g., MCP, A2A, API-based, etc.) 
+This project must also embed Responsible AI practices throughout its lifecycle. You will 
+select a real-world application area (shared in Week 3) and provide not just a working 
+system but also a clear plan for how it can be commercialized, including its pricing 
+model. 
+ 
+Group Formation 
+• 
+Each group must consist of 3–4 students. 
+• 
+Submit group details via [Insert Link / LMS]. 
+• 
+Deadline for group registration: End of Week 1 
+ 
+ 
+
+--- Page 2 ---
+Timeline 
+Week 
+Activity 
+Week 1 
+Group registration 
+Week 2 
+Domain selection, Report template and domain list released 
+Week 3 
+Assignment officially begins 
+Week 6 
+Mid Evaluation 
+Week 10 Final Submissions (Video, Report, GitHub Repo) 
+Week 11 Viva 
+ 
+ 
+System Requirements 
+Your system must: 
+1. Solve a problem in a selected domain (shared in Week 2). 
+2. Include at least two interacting intelligent agents. 
+3. Use: 
+o One or more LLMs 
+o NLP techniques (Ex-  NER, Summarization) 
+o Information Retrieval module 
+o Security features (Ex- authentication, input sanitization, encryption) 
+o Defined agent communication protocols (Ex- MCP, HTTP, sockets) 
+4. Be developed ethically and responsibly: 
+o Ensure fairness, explainability, transparency, and user data protection. 
+o Reflect Responsible AI considerations in the report and viva. 
+5. Include a commercialization strategy: 
+o Pricing model 
+o Target users/market 
+
+--- Page 3 ---
+o Deployment ideas 
+ 
+Deliverables 
+1. Mid Evaluation Presentation – Week 6 (20 Marks) 
+• 
+System architecture 
+• 
+Agent roles and communication flow 
+• 
+Progress demo 
+• 
+Responsible AI compliance check 
+• 
+Commercialization concept pitch (brief) 
+2. Final Submissions – Week 10 
+Deliverable 
+Description 
+Gen AI-Based 
+Video (25 Marks) 
+3–5 minute explanation using tools like Synthesia, Pika, HeyGen, etc. 
+Final Report (30 
+Marks) 
+Technical report using provided template (shared in Week 2). Must 
+include: system design, methodology, Responsible AI 
+implementation, commercialization plan (with pricing), evaluation 
+results 
+GitHub 
+Repository (5 
+Marks) 
+Well-organized codebase with a detailed README (setup, usage, 
+contributors, etc.) 
+ 
+3. Viva – Week 11 (20 Marks) 
+• 
+Technical depth 
+• 
+Individual contribution 
+• 
+Understanding of communication protocols 
+• 
+Explanation of Responsible AI practices 
+• 
+Commercialization and pricing discussion 
+Evaluation Breakdown 
+
+--- Page 4 ---
+Component 
+Marks 
+Mid Evaluation (Week 6) 
+20 
+Gen AI Video Submission 25 
+Report + GitHub Repo 
+35 
+Viva 
+20 
+Total 
+100 
+ 
+ 
+Additional Guidelines 
+• 
+Plagiarism or unauthorized code reuse will lead to disqualification. 
+• 
+Each group member must contribute, viva will check for individual involvement. 
+• 
+Responsible AI will be monitored at all stages (design, implementation, and 
+presentation). 
+• 
+The report template (with section instructions) will be provided in Week 2. 
+• 
+Use of any open-source or commercial LLMs / APIs / frameworks is allowed. 
+• 
+Creative and clear Gen AI video presentations will be highly rewarded. 
+ 
+For any doubts or assistance, contact during lab hours or via – samadhi.r@sliit.lk 
+ 
+

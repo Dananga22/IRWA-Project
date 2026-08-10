@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MedExplain AI — Report Analysis & Agent Workflow (Mid-Evaluation Demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  
+  <!-- React & Babel CDN for standalone live execution -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    :root {
+      --bg-light: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --primary-light: #e0f2fe;
+      --teal: #0d9488;
+      --teal-light: #ccfbf1;
+      --emerald: #10b981;
+      --emerald-light: #d1fae5;
+      --amber: #f59e0b;
+      --amber-light: #fef3c7;
+      --purple: #8b5cf6;
+      --purple-light: #f3e8ff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Nav */
+    .top-nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--teal));
+      color: white;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #bae6fd;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .user-name { font-size: 0.875rem; font-weight: 600; }
+    .logout-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover { background: #f1f5f9; color: #dc2626; }
+
+    /* Page Container */
+    .page-container {
+      max-width: 1000px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      flex: 1;
+    }
+
+    /* Main Header */
+    .main-header {
+      margin-bottom: 2rem;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+    }
+    .header-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+    .report-meta-grid {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      background: var(--bg-light);
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.25rem;
+    }
+    .meta-chip {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .meta-chip strong { color: var(--text-dark); font-weight: 600; }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .status-badge.processing { background: var(--primary-light); color: var(--primary); }
+    .status-badge.complete { background: var(--emerald-light); color: #047857; }
+
+    .disclaimer-alert {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #fefce8;
+      border: 1px solid #fef08a;
+      color: #854d0e;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    /* Overall Progress Bar */
+    .progress-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .progress-title { font-weight: 600; font-size: 0.95rem; }
+    .progress-count { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    .progress-bar-bg {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--teal));
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* Agent Timeline Cards */
+    .workflow-section {
+      margin-bottom: 2.5rem;
+    }
+    .agent-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    .agent-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.35rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .agent-card.waiting { opacity: 0.7; }
+    .agent-card.processing {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light), var(--shadow-md);
+      opacity: 1;
+    }
+    .agent-card.completed {
+      border-color: #a7f3d0;
+      background: #fafdfb;
+    }
+
+    .agent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.6rem;
+    }
+    .agent-title-box {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .agent-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      border: 1px solid var(--border-color);
+    }
+    .agent-card.processing .agent-icon {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #bae6fd;
+      animation: pulse 1.5s infinite;
+    }
+    .agent-card.completed .agent-icon {
+      background: var(--emerald-light);
+      color: #059669;
+      border-color: #a7f3d0;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .agent-name-wrap { display: flex; flex-direction: column; }
+    .agent-number { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .agent-name { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); }
+    
+    .agent-status-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .status-pill-waiting { background: #f1f5f9; color: var(--text-muted); }
+    .status-pill-processing { background: var(--primary-light); color: var(--primary); }
+    .status-pill-completed { background: var(--emerald-light); color: #047857; }
+
+    .agent-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* Specialized Card Content */
+    .agent-meta-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .tag-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: var(--text-dark);
+      border: 1px solid var(--border-color);
+    }
+    .tag-badge.mcp {
+      background: var(--purple-light);
+      color: #6b21a8;
+      border-color: #e9d5ff;
+      font-weight: 700;
+    }
+    .tag-badge.gemini {
+      background: #eff6ff;
+      color: #1e40af;
+      border-color: #bfdbfe;
+      font-weight: 700;
+    }
+    .tag-badge.proto {
+      background: var(--amber-light);
+      color: #b45309;
+      border-color: #fde68a;
+      font-weight: 700;
+    }
+
+    .output-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      color: #0f172a;
+    }
+    .output-box.success {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: #166534;
+      font-weight: 500;
+    }
+
+    .demo-preview-list {
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .source-chips {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+    .source-chip {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 600;
+    }
+
+    .checklist-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #047857;
+    }
+
+    /* LangGraph Shared State Section */
+    .langgraph-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .langgraph-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .langgraph-title { font-size: 1.05rem; font-weight: 700; }
+    .state-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.85rem;
+    }
+    .node-box {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .state-connector {
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .langgraph-note {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Completion Section */
+    .completion-panel {
+      background: linear-gradient(135deg, #f0fdf4, #e6fffa);
+      border: 2px solid #6ee7b7;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .completion-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .completion-title { font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 700; color: #065f46; margin-bottom: 0.4rem; }
+    .completion-desc { color: #047857; font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .action-btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .primary-btn {
+      background: linear-gradient(135deg, var(--primary), var(--teal));
+      color: white;
+      border: none;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+    .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35); }
+    .secondary-btn {
+      background: white;
+      color: var(--text-dark);
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .secondary-btn:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+    /* Control Floating Bar */
+    .demo-control-bar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      z-index: 1000;
+    }
+    .demo-start-btn {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 0.45rem 1.25rem;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .demo-start-btn:hover { background: #0369a1; }
+
+    footer {
+      text-align: center;
+      padding: 1.75rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.825rem;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a href="#" class="brand-logo">
+      <div class="brand-icon">🩺</div>
+      <span class="brand-title">MedExplain AI</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-item">Dashboard</a></li>
+      <li><a href="#" class="nav-item active">Analyze Report</a></li>
+      <li><a href="#" class="nav-item">My Reports</a></li>
+      <li><a href="#" class="nav-item">Profile</a></li>
+    </ul>
+    <div class="user-profile">
+      <div class="avatar">JS</div>
+      <span class="user-name">John Smith</span>
+      <button class="logout-btn">Logout</button>
+    </div>
+  </nav>
+
+  <!-- React Root Container -->
+  <div id="react-root"></div>
+
+  <!-- Footer -->
+  <footer>
+    <strong>MedExplain AI</strong> — IT3041 Agentic AI System Development | Prototype Demo &copy; 2026
+  </footer>
+
+  <!-- React Live Application Script -->
+  <script type="text/babel">
+    const AGENTS_CONFIG = [
+      {
+        id: 1,
+        number: "AGENT 1",
+        name: "Document Processing Agent",
+        icon: "📄",
+        tech: "PyMuPDF",
+        desc: "Extracting raw text from the uploaded laboratory report PDF file.",
+        duration: 2000,
+        outputSuccess: "✓ Text extracted successfully (PDF → Raw Text)"
+      },
+      {
+        id: 2,
+        number: "AGENT 2",
+        name: "NLP Extraction Agent",
+        icon: "🔬",
+        tech: "Regex / NLP",
+        desc: "Identifying laboratory test names, measured values, units, and reference ranges.",
+        duration: 3000,
+        outputSuccess: "✓ 8 laboratory values identified (Sample Demo Data):",
+        demoValues: ["Hemoglobin — 13.2 g/dL", "WBC — 7.4 ×10⁹/L", "Platelets — 250 ×10⁹/L"]
+      },
+      {
+        id: 3,
+        number: "AGENT 3",
+        name: "RAG Retrieval Agent",
+        icon: "📚",
+        tech: "Sentence Transformers + Vector DB",
+        badge: "MCP TOOL CALL",
+        desc: "Retrieving relevant clinical guidelines and medical evidence from trusted sources.",
+        duration: 3000,
+        sources: ["WHO", "CDC", "MedlinePlus"],
+        note: "Agent accesses the RAG retrieval capability through an MCP tool call.",
+        outputSuccess: "✓ Relevant clinical sources retrieved via MCP Protocol"
+      },
+      {
+        id: 4,
+        number: "AGENT 4",
+        name: "LLM Explanation Agent",
+        icon: "🧠",
+        tech: "Gemini API",
+        badge: "Gemini API",
+        desc: "Generating a simple, patient-friendly explanation using extracted results and retrieved medical context.",
+        duration: 4000,
+        outputSuccess: "✓ Patient-friendly explanation generated"
+      },
+      {
+        id: 5,
+        number: "AGENT 5",
+        name: "Safety Verification Agent",
+        icon: "🛡️",
+        badge: "Prototype — In Development",
+        desc: "Reviewing the generated explanation for safety, clarity, and inappropriate medical claims.",
+        duration: 3000,
+        checklist: [
+          "✓ No diagnosis generated",
+          "✓ No unsafe treatment recommendation",
+          "✓ Medical disclaimer included",
+          "✓ Explanation safety reviewed"
+        ],
+        outputSuccess: "✓ Safety verification complete (Prototype Guardrail)"
+      }
+    ];
+
+    function AnalysisPage() {
+      // States: 'idle', 'running', 'completed'
+      const [demoStatus, setDemoStatus] = React.useState('idle');
+      const [currentAgentIndex, setCurrentAgentIndex] = React.useState(0);
+      const [agentStates, setAgentStates] = React.useState({
+        1: 'waiting',
+        2: 'waiting',
+        3: 'waiting',
+        4: 'waiting',
+        5: 'waiting'
+      });
+
+      const completedCount = Object.values(agentStates).filter(s => s === 'completed').length;
+      const progressPercent = Math.round((completedCount / 5) * 100);
+
+      const startDemo = () => {
+        setDemoStatus('running');
+        setAgentStates({ 1: 'waiting', 2: 'waiting', 3: 'waiting', 4: 'waiting', 5: 'waiting' });
+        runAgentStep(0);
+      };
+
+      const runAgentStep = (index) => {
+        if (index >= AGENTS_CONFIG.length) {
+          setDemoStatus('completed');
+          return;
+        }
+
+        const agent = AGENTS_CONFIG[index];
+        setCurrentAgentIndex(index);
+
+        setAgentStates(prev => ({ ...prev, [agent.id]: 'processing' }));
+
+        setTimeout(() => {
+          setAgentStates(prev => ({ ...prev, [agent.id]: 'completed' }));
+          runAgentStep(index + 1);
+        }, agent.duration);
+      };
+
+      const handleViewResults = () => {
+        window.location.href = "/";
+      };
+
+      return (
+        <div className="page-container">
+          {/* Main Header */}
+          <div className="main-header">
+            <h1 className="header-title">Analyzing Your Medical Report</h1>
+            <p className="header-subtitle">MedExplain AI is processing your report through a series of specialized AI agents.</p>
+            
+            <div className="report-meta-grid">
+              <div className="meta-chip">📄 <strong>Report:</strong> CBC_Laboratory_Report.pdf</div>
+              <div className="meta-chip">🌐 <strong>Language:</strong> English</div>
+              <div className="meta-chip">
+                <strong>Status:</strong> {' '}
+                <span className={`status-badge ${demoStatus === 'completed' ? 'complete' : 'processing'}`}>
+                  {demoStatus === 'completed' ? '✓ Analysis Complete' : '⚙️ Processing...'}
+                </span>
+              </div>
+            </div>
+
+            <div className="disclaimer-alert">
+              <span>⚠️</span>
+              <span><strong>Disclaimer:</strong> AI-generated analysis for educational purposes only. This is not a medical diagnosis.</span>
+            </div>
+          </div>
+
+          {/* Overall Progress */}
+          <div className="progress-card">
+            <div className="progress-header">
+              <span className="progress-title">Overall Progress</span>
+              <span className="progress-count"><strong>{completedCount} of 5 agents completed</strong> ({progressPercent}%)</span>
+            </div>
+            <div className="progress-bar-bg">
+              <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }}></div>
+            </div>
+          </div>
+
+          {/* Agent Timeline Workflow */}
+          <div className="workflow-section">
+            <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem', fontWeight: '700' }}>🤖 Multi-Agent Processing Workflow</h3>
+            <div className="agent-timeline">
+              {AGENTS_CONFIG.map((agent) => {
+                const status = agentStates[agent.id];
+                return (
+                  <div key={agent.id} className={`agent-card ${status}`}>
+                    <div className="agent-header">
+                      <div className="agent-title-box">
+                        <div className="agent-icon">{agent.icon}</div>
+                        <div className="agent-name-wrap">
+                          <span className="agent-number">{agent.number} • {agent.tech}</span>
+                          <span className="agent-name">{agent.name}</span>
+                        </div>
+                      </div>
+                      <div className={`agent-status-pill status-pill-${status}`}>
+                        {status === 'waiting' && '⏳ Waiting'}
+                        {status === 'processing' && '⚙️ Processing...'}
+                        {status === 'completed' && '✓ Completed'}
+                      </div>
+                    </div>
+
+                    <p className="agent-desc">{agent.desc}</p>
+
+                    {/* Metadata Badges */}
+                    <div className="agent-meta-tags">
+                      {agent.badge === 'MCP TOOL CALL' && <span className="tag-badge mcp">⚡ MCP TOOL CALL</span>}
+                      {agent.badge === 'Gemini API' && <span className="tag-badge gemini">✨ Gemini API</span>}
+                      {agent.badge === 'Prototype — In Development' && <span className="tag-badge proto">🛠️ Prototype — In Development</span>}
+                      {agent.sources && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>RAG Sources:</span>
+                          <div className="source-chips">
+                            {agent.sources.map(s => <span key={s} className="source-chip">{s}</span>)}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {agent.note && <div style={{ fontSize: '0.8rem', color: '#64748b', fontStyle: 'italic', marginBottom: '0.5rem' }}>{agent.note}</div>}
+
+                    {/* Completion State Output Box */}
+                    {status === 'completed' && (
+                      <div className="output-box success">
+                        {agent.outputSuccess}
+                        {agent.demoValues && (
+                          <ul className="demo-preview-list">
+                            {agent.demoValues.map((v, i) => <li key={i}>{v}</li>)}
+                          </ul>
+                        )}
+                        {agent.checklist && (
+                          <div className="checklist-items">
+                            {agent.checklist.map((c, i) => <div key={i}>{c}</div>)}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* LangGraph Shared State Diagram */}
+          <div className="langgraph-card">
+            <div className="langgraph-header">
+              <span style={{ fontSize: '1.2rem' }}>🔗</span>
+              <span className="langgraph-title">Agent Communication — LangGraph Shared State</span>
+            </div>
+            <div className="state-diagram">
+              <div className="node-box">Document Agent</div>
+              <div className="state-connector">→ <span>SharedState</span> →</div>
+              <div className="node-box">NLP Agent</div>
+              <div className="state-connector">→ <span>SharedState</span> →</div>
+              <div className="node-box">RAG Agent (MCP)</div>
+              <div className="state-connector">→ <span>SharedState</span> →</div>
+              <div className="node-box">LLM Agent</div>
+              <div className="state-connector">→ <span>SharedState</span> →</div>
+              <div className="node-box">Safety Agent</div>
+            </div>
+            <p className="langgraph-note">
+              Agents exchange processing results asynchronously through a shared state managed by LangGraph. The RAG Retrieval capability is decoupled and accessed through a standardized Model Context Protocol (MCP) tool call.
+            </p>
+          </div>
+
+          {/* Completion State Banner */}
+          {demoStatus === 'completed' && (
+            <div className="completion-panel">
+              <div className="completion-icon">🎉</div>
+              <h2 className="completion-title">Analysis Complete ✓</h2>
+              <p className="completion-desc">Your medical laboratory report has been successfully processed through all five AI agents.</p>
+              <div className="action-btn-group">
+                <button className="primary-btn" onClick={handleViewResults}>View Patient Explanation Report</button>
+                <button className="secondary-btn" onClick={() => window.location.href = "/"}>Return to Dashboard</button>
+              </div>
+            </div>
+          )}
+
+          {/* Floating Live Presentation Demo Bar */}
+          <div className="demo-control-bar">
+            <span>⚡ <strong>Mid-Eval Live Demo Control</strong></span>
+            <button className="demo-start-btn" onClick={startDemo} disabled={demoStatus === 'running'}>
+              {demoStatus === 'running' ? 'Simulating Pipeline...' : '▶ Start Demo Analysis'}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('react-root'));
+    root.render(<AnalysisPage />);
+  </script>
+</body>
+</html>

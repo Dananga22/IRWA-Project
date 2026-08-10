@@ -1,0 +1,50 @@
+{
+  "pdf_path": "sample_reports/sample_cbc_report.pdf",
+  "metadata": {
+    "patient_name": "John Doe",
+    "report_date": "2026-08-01",
+    "panel_type": "Complete Blood Count (CBC)",
+    "ordering_physician": "Dr. Sarah Jenkins, MD",
+    "lab_id": "LAB-2026-8841"
+  },
+  "test_items": [
+    {
+      "test_name": "WBC (White Blood Cells)",
+      "value": 11.8,
+      "unit": "x10^3/uL",
+      "reference_range": "4.5 - 11.0",
+      "flag": "HIGH"
+    },
+    {
+      "test_name": "RBC (Red Blood Cells)",
+      "value": 4.2,
+      "unit": "x10^6/uL",
+      "reference_range": "4.3 - 5.9",
+      "flag": "LOW"
+    },
+    {
+      "test_name": "Hemoglobin",
+      "value": 11.5,
+      "unit": "g/dL",
+      "reference_range": "13.5 - 17.5",
+      "flag": "LOW"
+    },
+    {
+      "test_name": "Hematocrit",
+      "value": 35.0,
+      "unit": "%",
+      "reference_range": "41.0 - 50.0",
+      "flag": "LOW"
+    },
+    {
+      "test_name": "Platelets",
+      "value": 240.0,
+      "unit": "x10^3/uL",
+      "reference_range": "150 - 450",
+      "flag": "NORMAL"
+    }
+  ],
+  "total_tests": 5,
+  "abnormal_count": 4,
+  "raw_text": "MEDEXPLAIN DIAGNOSTICS & LAB SERVICES\n108 Healthcare Blvd, Suite 400 | Patient Clinical Report\nPatient Name: John Doe\nReport Date: 2026-08-01\nPanel Type: Complete Blood Count (CBC)\nOrdering Physician: Dr. Sarah Jenkins, MD\nStatus: Completed\nLab ID: LAB-2026-8841\nTest Description\nResult Value\nUnits\nReference Interval\nFlag\nWBC (White Blood Cells)\n11.8\nx10^3/uL\n4.5 - 11.0\nHIGH\nRBC (Red Blood Cells)\n4.2\nx10^6/uL\n4.3 - 5.9\nLOW\nHemoglobin\n11.5\ng/dL\n13.5 - 17.5\nLOW\nHematocrit\n35.0\n%\n41.0 - 50.0\nLOW\nPlatelets\n240\nx10^3/uL\n150 - 450\nNORMAL\nNotice: This lab report contains preliminary clinical data. Please consult your physician for definitive diagnosis.\n"
+}

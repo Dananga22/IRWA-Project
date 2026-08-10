@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MedExplain AI — Agentic Medical Report Explainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.25);
+      --accent: #8b5cf6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --high-color: #ef4444;
+      --high-bg: rgba(239, 68, 68, 0.15);
+      --low-color: #f59e0b;
+      --low-bg: rgba(245, 158, 11, 0.15);
+      --normal-color: #10b981;
+      --normal-bg: rgba(16, 185, 129, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.12) 0%, transparent 40%);
+    }
+
+    header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-box { display: flex; align-items: center; gap: 0.75rem; }
+    .logo-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; font-weight: bold; box-shadow: 0 0 20px var(--primary-glow);
+    }
+    .logo-text { font-family: 'Outfit', sans-serif; font-size: 1.35rem; font-weight: 700; }
+    .badge-tag {
+      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc; font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 20px;
+    }
+
+    main { flex: 1; max-width: 1200px; width: 100%; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    .hero-section { text-align: center; margin-bottom: 2.5rem; }
+    .hero-title { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .hero-title span { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-desc { color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 1rem; line-height: 1.6; }
+
+    /* Upload Box */
+    .upload-card {
+      background: var(--card-bg); border: 2px dashed rgba(99, 102, 241, 0.3);
+      border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center;
+      transition: all 0.3s ease; cursor: pointer; backdrop-filter: blur(12px);
+      margin-bottom: 2rem; position: relative;
+    }
+    .upload-card:hover, .upload-card.dragover {
+      border-color: var(--primary); background: rgba(99, 102, 241, 0.05);
+      box-shadow: 0 0 30px var(--primary-glow);
+    }
+    .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .upload-btn {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white; border: none; padding: 0.75rem 1.75rem; border-radius: 8px;
+      font-weight: 600; cursor: pointer; margin-top: 1rem; transition: transform 0.2s;
+    }
+    .upload-btn:hover { transform: translateY(-2px); }
+
+    /* Sample Quick Select Buttons */
+    .samples-bar {
+      display: flex; gap: 1rem; justify-content: center; align-items: center;
+      flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .sample-chip {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--card-border);
+      color: var(--text-muted); padding: 0.5rem 1.25rem; border-radius: 30px;
+      cursor: pointer; transition: all 0.2s; font-size: 0.875rem; font-weight: 500;
+    }
+    .sample-chip:hover {
+      background: rgba(99, 102, 241, 0.15); border-color: var(--primary); color: white;
+    }
+
+    /* Pipeline Status Stepper */
+    .pipeline-status {
+      display: none; background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .pipeline-status.active { display: block; }
+    .stepper-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .step-item {
+      background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;
+    }
+    .step-item.running { border-color: var(--primary); background: rgba(99, 102, 241, 0.1); }
+    .step-item.completed { border-color: var(--normal-color); background: rgba(16, 185, 129, 0.08); }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.1);
+      display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700;
+    }
+    .step-item.completed .step-num { background: var(--normal-color); color: #000; }
+
+    /* Results Section */
+    .results-container { display: none; margin-top: 2rem; }
+    .results-container.active { display: block; }
+    
+    .meta-box {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .meta-item label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .meta-item val { font-size: 1.1rem; font-weight: 600; display: block; margin-top: 0.25rem; }
+
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.25rem; }
+    .biomarker-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 1.25rem; transition: transform 0.2s, border-color 0.2s;
+    }
+    .biomarker-card:hover { transform: translateY(-3px); border-color: rgba(99, 102, 241, 0.4); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+    .test-name { font-weight: 600; font-size: 1.05rem; }
+    
+    .flag-badge {
+      font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 20px; text-transform: uppercase;
+    }
+    .flag-HIGH { background: var(--high-bg); color: var(--high-color); border: 1px solid rgba(239, 68, 68, 0.4); }
+    .flag-LOW { background: var(--low-bg); color: var(--low-color); border: 1px solid rgba(245, 158, 11, 0.4); }
+    .flag-NORMAL { background: var(--normal-bg); color: var(--normal-color); border: 1px solid rgba(16, 185, 129, 0.4); }
+
+    .val-display { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .ref-range { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .explanation-box {
+      background: rgba(0, 0, 0, 0.25); border-radius: 8px; padding: 0.85rem;
+      font-size: 0.875rem; line-height: 1.5; color: #cbd5e1; border-left: 3px solid var(--primary);
+    }
+
+    .disclaimer-banner {
+      margin-top: 2.5rem; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 12px; padding: 1.25rem; text-align: center; color: #fbbf24; font-size: 0.85rem; line-height: 1.5;
+    }
+
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--card-border); color: var(--text-muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-box">
+      <div class="logo-icon">🩺</div>
+      <div class="logo-text">MedExplain AI</div>
+    </div>
+    <span class="badge-tag">IT3041 Multi-Agent System</span>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <h1 class="hero-title">Understand Your Lab Reports in <span>Plain English</span></h1>
+      <p class="hero-desc">Upload your medical blood test PDF or test sample report panels to experience our Multi-Agent AI system in real time.</p>
+    </section>
+
+    <!-- Upload Box -->
+    <div class="upload-card" id="uploadDropzone">
+      <div class="upload-icon">📄</div>
+      <h3>Drag & Drop your Lab Report PDF here</h3>
+      <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.35rem;">Supports standard PDF clinical lab reports (CBC, Lipid Panel, Metabolic Panel)</p>
+      <input type="file" id="fileInput" accept=".pdf" style="display: none;" />
+      <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Select PDF File</button>
+    </div>
+
+    <!-- Quick Samples -->
+    <div class="samples-bar">
+      <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 500;">Or try sample panel:</span>
+      <button class="sample-chip" onclick="analyzeSample('cbc')">⚡ Complete Blood Count (CBC)</button>
+      <button class="sample-chip" onclick="analyzeSample('lipid')">⚡ Lipid Profile Panel</button>
+      <button class="sample-chip" onclick="analyzeSample('metabolic')">⚡ Metabolic Panel (CMP)</button>
+    </div>
+
+    <!-- Stepper Status -->
+    <div class="pipeline-status" id="pipelineStatus">
+      <h4 style="margin-bottom: 1rem; font-size: 0.95rem; font-weight: 600; color: #a5b4fc;">🤖 Agent Orchestration Pipeline</h4>
+      <div class="stepper-grid">
+        <div class="step-item" id="step1">
+          <div class="step-num">1</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">Document Agent</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">PyMuPDF Ingestion</div>
+          </div>
+        </div>
+        <div class="step-item" id="step2">
+          <div class="step-num">2</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">NLP Extraction</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Regex & Tabular Parser</div>
+          </div>
+        </div>
+        <div class="step-item" id="step3">
+          <div class="step-num">3</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">Gemini LLM Agent</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Patient Explanation</div>
+          </div>
+        </div>
+        <div class="step-item" id="step4">
+          <div class="step-num">4</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">Database Agent</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">SQL Data Persistence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-container" id="resultsContainer">
+      <div class="meta-box">
+        <div class="meta-item">
+          <label>Patient Name</label>
+          <val id="metaPatient">-</val>
+        </div>
+        <div class="meta-item">
+          <label>Report Date</label>
+          <val id="metaDate">-</val>
+        </div>
+        <div class="meta-item">
+          <label>Panel Type</label>
+          <val id="metaPanel">-</val>
+        </div>
+        <div class="meta-item">
+          <label>Biomarkers Evaluated</label>
+          <val id="metaTotal">-</val>
+        </div>
+        <div class="meta-item">
+          <label>Attention Needed</label>
+          <val id="metaAbnormal" style="color: var(--high-color);">-</val>
+        </div>
+      </div>
+
+      <div class="grid-cards" id="biomarkersGrid"></div>
+
+      <div class="disclaimer-banner">
+        ⚠️ <strong>Responsible AI Safety Disclaimer:</strong> MedExplain AI provides educational explanations of laboratory data for informational purposes only. It is not a diagnostic tool and does not replace professional medical advice, diagnosis, or treatment from a qualified physician.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    MedExplain AI &copy; 2026 — IT3041 Information Retrieval & Web Analytics Group Project
+  </footer>
+
+  <script>
+    const dropzone = document.getElementById('uploadDropzone');
+    const fileInput = document.getElementById('fileInput');
+
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault(); dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) uploadFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => { if (e.target.files.length) uploadFile(e.target.files[0]); });
+
+    async function uploadFile(file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      runPipelineVisuals();
+
+      try {
+        const res = await fetch('/api/v1/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) renderResults(data);
+        else alert('Error: ' + (data.detail || 'Upload failed'));
+      } catch (err) {
+        alert('Server error: ' + err.message);
+      }
+    }
+
+    async function analyzeSample(sampleType) {
+      runPipelineVisuals();
+      try {
+        const res = await fetch(`/api/v1/analyze-sample?sample_name=${sampleType}`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) renderResults(data);
+        else alert('Error: ' + (data.detail || 'Sample processing failed'));
+      } catch (err) {
+        alert('Server error: ' + err.message);
+      }
+    }
+
+    function runPipelineVisuals() {
+      document.getElementById('pipelineStatus').classList.add('active');
+      document.getElementById('resultsContainer').classList.remove('active');
+
+      ['step1', 'step2', 'step3', 'step4'].forEach(id => {
+        const el = document.getElementById(id);
+        el.className = 'step-item';
+      });
+
+      document.getElementById('step1').classList.add('running');
+      setTimeout(() => { document.getElementById('step1').classList.replace('running', 'completed'); document.getElementById('step2').classList.add('running'); }, 500);
+      setTimeout(() => { document.getElementById('step2').classList.replace('running', 'completed'); document.getElementById('step3').classList.add('running'); }, 1100);
+      setTimeout(() => { document.getElementById('step3').classList.replace('running', 'completed'); document.getElementById('step4').classList.add('running'); }, 1800);
+      setTimeout(() => { document.getElementById('step4').classList.replace('running', 'completed'); }, 2300);
+    }
+
+    function renderResults(data) {
+      setTimeout(() => {
+        document.getElementById('resultsContainer').classList.add('active');
+        document.getElementById('metaPatient').innerText = data.metadata.patient_name || 'N/A';
+        document.getElementById('metaDate').innerText = data.metadata.report_date || 'N/A';
+        document.getElementById('metaPanel').innerText = data.metadata.panel_type || 'Lab Panel';
+        document.getElementById('metaTotal').innerText = data.total_tests;
+        document.getElementById('metaAbnormal').innerText = `${data.abnormal_count} High/Low`;
+
+        const grid = document.getElementById('biomarkersGrid');
+        grid.innerHTML = '';
+
+        data.test_items.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'biomarker-card';
+          card.innerHTML = `
+            <div class="card-header">
+              <span class="test-name">${item.test_name}</span>
+              <span class="flag-badge flag-${item.flag}">${item.flag}</span>
+            </div>
+            <div class="val-display">${item.value} <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">${item.unit}</span></div>
+            <div class="ref-range">Reference Range: <code>${item.reference_range}</code></div>
+            <div class="explanation-box">${item.explanation}</div>
+          `;
+          grid.appendChild(card);
+        });
+
+        grid.scrollIntoView({ behavior: 'smooth' });
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
