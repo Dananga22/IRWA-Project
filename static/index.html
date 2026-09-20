@@ -459,6 +459,7 @@
       <div class="filter-row">
         <button class="filter-tab active" id="tabLabManage" onclick="switchLabTab('manage')">Managed Test Records</button>
         <button class="filter-tab" id="tabLabUpload" onclick="switchLabTab('upload')">Upload New Result</button>
+        <button class="filter-tab" id="tabLabUsers" onclick="switchLabTab('users')">System Users</button>
       </div>
 
       <!-- Manage Tests Table -->
@@ -482,6 +483,29 @@
             <tbody id="labTestList">
               <!-- JS Populated -->
               <tr><td colspan="6" style="text-align:center;">Loading records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- System Users Table -->
+      <div id="labUsersSec" class="data-panel" style="display:none;">
+        <div class="data-panel-header">
+          <h3 style="font-size:1rem;color:var(--text-primary);">Registered Accounts (System Overview)</h3>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody id="labUsersList">
+              <tr><td colspan="5" style="text-align:center;">Loading system users...</td></tr>
             </tbody>
           </table>
         </div>
@@ -1083,13 +1107,46 @@
     function switchLabTab(mode) {
       document.getElementById('tabLabManage').classList.toggle('active', mode==='manage');
       document.getElementById('tabLabUpload').classList.toggle('active', mode==='upload');
+      document.getElementById('tabLabUsers').classList.toggle('active', mode==='users');
+
       document.getElementById('labManageSec').style.display = mode==='manage'?'block':'none';
       document.getElementById('labUploadSec').style.display = mode==='upload'?'block':'none';
+      document.getElementById('labUsersSec').style.display = mode==='users'?'block':'none';
       
       const demoBtn = document.getElementById('btnDemoPatientUpload');
       if (demoBtn) demoBtn.style.display = 'none';
 
       if(mode==='manage') loadLabTests();
+      if(mode==='users') loadLabUsers();
+    }
+
+    async function loadLabUsers() {
+      const list = document.getElementById('labUsersList');
+      list.innerHTML = '<tr><td colspan="5" style="text-align:center;">Loading users...</td></tr>';
+      try {
+        const res = await fetch('/lab/users', { headers: {'Authorization':`Bearer ${authToken}`} });
+        if(res.ok) {
+          const data = await res.json();
+          const users = data.users || [];
+          if(users.length === 0) {
+            list.innerHTML = '<tr><td colspan="5" style="text-align:center;">No users registered yet.</td></tr>';
+            return;
+          }
+          list.innerHTML = users.map(u => `
+            <tr>
+              <td><strong>#${u.id}</strong></td>
+              <td>${u.full_name}</td>
+              <td>${u.email}</td>
+              <td><span class="badge ${u.role === 'lab_assistant' ? 'amber' : 'blue'}" style="padding: 0.2rem 0.6rem; font-size:0.75rem; border-radius: var(--radius-pill); background: ${u.role === 'lab_assistant' ? 'rgba(242,169,59,0.15)' : 'rgba(79,166,255,0.15)'}; color: ${u.role === 'lab_assistant' ? 'var(--accent-amber)' : 'var(--accent-blue)'};">${u.role.toUpperCase()}</span></td>
+              <td>${(u.created_at || '').split('.')[0]}</td>
+            </tr>
+          `).join('');
+        } else {
+          list.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--accent-red);">Access Denied.</td></tr>';
+        }
+      } catch(e) {
+        list.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--accent-red);">Failed to load system users.</td></tr>';
+      }
     }
 
     let allManagedTests = [];

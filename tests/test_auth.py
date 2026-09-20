@@ -239,6 +239,23 @@ class TestRoleBasedAuth(unittest.TestCase):
         res = self.client.get("/patient/my-reports", headers=lab_headers)
         self.assertEqual(res.status_code, 403)
 
+    def test_lab_assistant_login_returns_correct_role(self) -> None:
+        """Verify that logging in as a provisioned lab assistant returns role='lab_assistant' in JWT claims and response."""
+        from medexplain.auth import hash_password
+        from medexplain.db import create_user
+
+        email = "lab_login_test@hospital.org"
+        pwd = "LabPassword123!"
+        create_user(email, hash_password(pwd), "lab_assistant", "Tech Lab Test")
+
+        res = self.client.post("/api/v1/auth/login", json={"email": email, "password": pwd})
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+
+        # Returned user claim must explicitly be lab_assistant
+        self.assertEqual(data["user"]["role"], "lab_assistant")
+        self.assertNotEqual(data["user"]["role"], "patient")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

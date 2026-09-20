@@ -475,6 +475,27 @@ async def delete_lab_report(
     audit("lab.report_deleted", lab_assistant_id=current_user["id"], report_id=report_id)
     return JSONResponse(content={"message": "Lab report record deleted successfully.", "report_id": report_id})
 
+
+@app.get("/lab/users")
+async def lab_list_users(
+    current_user: Dict[str, Any] = Depends(require_lab_assistant),
+) -> JSONResponse:
+    """List registered system users (patients and lab assistants) with role and activity dates."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT id, email, role, full_name, created_at, updated_at
+        FROM users
+        ORDER BY created_at DESC
+        """
+    )
+    rows = cursor.fetchall()
+    conn.close()
+
+    users = [dict(r) for r in rows]
+    return JSONResponse(content={"users": users})
+
 SAMPLE_REPORTS: Dict[str, str] = {
     "cbc": "sample_cbc_report.pdf",
     "lipid": "sample_lipid_panel.pdf",
