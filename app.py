@@ -97,7 +97,7 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 class SignupRequest(BaseModel):
     email: str
     password: str
-    role: str = Field(..., description="Role must be 'patient' or 'lab_assistant'")
+    role: Optional[str] = "patient"
     full_name: str
 
 class LoginRequest(BaseModel):
@@ -114,12 +114,16 @@ class LabUploadRequest(BaseModel):
 
 @app.post("/api/v1/auth/signup", status_code=201)
 async def signup(req: SignupRequest) -> JSONResponse:
-    """Register a new user with server-validated role locking and bcrypt password hashing."""
+    """Register a new patient account with mandatory server-side role restriction to 'patient'."""
     email = sanitize_input(req.email).lower()
     full_name = sanitize_input(req.full_name)
-    role = sanitize_input(req.role).lower()
 
-    # Server-side validation of inputs and role locking
+    # Server-side security enforcement: Public self-registration is strictly locked
+    # to role="patient" to prevent privilege escalation attacks.
+    # Any role value submitted in the request payload is explicitly ignored and overridden.
+    role = "patient"
+
+    # Server-side validation of inputs
     validate_signup_input(email, req.password, role, full_name)
 
     # Check for existing email

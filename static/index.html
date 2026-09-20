@@ -571,13 +571,6 @@
             <label>Full Name</label>
             <input type="text" id="authFullName" class="form-control" placeholder="e.g. Jane Doe">
           </div>
-          <div id="authRoleGroup" class="form-group" style="display:none;">
-            <label>Select Role</label>
-            <select id="authRole" class="form-control">
-              <option value="patient">Patient</option>
-              <option value="lab_assistant">Lab Assistant / Tech</option>
-            </select>
-          </div>
           <div class="form-group">
             <label>Email Address</label>
             <input type="email" id="authEmail" class="form-control" required placeholder="name@example.com">
@@ -788,14 +781,13 @@
       document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
       document.getElementById('authTabSignup').classList.toggle('active', mode==='signup');
       document.getElementById('authFullNameGroup').style.display = mode==='signup' ? 'block' : 'none';
-      document.getElementById('authRoleGroup').style.display = mode==='signup' ? 'block' : 'none';
       
       const fnInput = document.getElementById('authFullName');
       if(mode==='signup') { fnInput.setAttribute('required', 'true'); } 
       else { fnInput.removeAttribute('required'); }
 
-      document.getElementById('authModalTitle').innerText = mode==='signup' ? 'Register Account' : 'Sign In';
-      document.getElementById('authSubmitBtn').innerText = mode==='signup' ? 'Register' : 'Sign In';
+      document.getElementById('authModalTitle').innerText = mode==='signup' ? 'Create Patient Account' : 'Sign In';
+      document.getElementById('authSubmitBtn').innerText = mode==='signup' ? 'Create Account' : 'Sign In';
       document.getElementById('authAlert').style.display = 'none';
     }
 
@@ -816,7 +808,6 @@
            alertbox.innerText = 'Full Name is required.';
            return;
         }
-        payload.role = document.getElementById('authRole').value;
       }
 
       try {

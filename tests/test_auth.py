@@ -63,8 +63,8 @@ class TestRoleBasedAuth(unittest.TestCase):
         self.assertNotIn("Password123!", user["password_hash"])
 
     def test_server_side_role_locking(self) -> None:
-        """Server must reject invalid or escalated roles."""
-        for invalid_role in ["admin", "superuser", "doctor", "root"]:
+        """Public signup endpoint must safely lock all self-registrations to 'patient' role."""
+        for invalid_role in ["admin", "superuser", "doctor", "root", "lab_assistant"]:
             payload = {
                 "email": f"hacker_{invalid_role}@example.com",
                 "password": "Password123!",
@@ -72,8 +72,12 @@ class TestRoleBasedAuth(unittest.TestCase):
                 "full_name": "Hacker User",
             }
             res = self.client.post("/api/v1/auth/signup", json=payload)
-            self.assertEqual(res.status_code, 400)
-            self.assertIn("Invalid role", res.json()["detail"])
+            self.assertEqual(res.status_code, 201)
+            # Enforce that elevated role was neutralized and user was created as patient
+            self.assertEqual(res.json()["user"]["role"], "patient")
+            user = get_user_by_email(f"hacker_{invalid_role}@example.com")
+            self.assertIsNotNone(user)
+            self.assertEqual(user["role"], "patient")
 
     def test_input_validation_email_and_password_strength(self) -> None:
         """Enforce strict email and password complexity rules."""
@@ -141,6 +145,29 @@ class TestRoleBasedAuth(unittest.TestCase):
         self.assertEqual(res_blocked.status_code, 429)
         self.assertIn("Too many failed login attempts", res_blocked.json()["detail"])
 
+    def test_public_signup_role_override_prevents_privilege_escalation(self) -> None:
+        """
+        Public self-registration via /api/v1/auth/signup must ALWAYS assign role='patient',
+        even if a client submits role='lab_assistant' or any other privilege escalation attempt.
+        """
+        payload = {
+            "email": "attacker@example.com",
+            "password": "Password123!",
+            "role": "lab_assistant",
+            "full_name": "Attacker User",
+        }
+        res = self.client.post("/api/v1/auth/signup", json=payload)
+        self.assertEqual(res.status_code, 201)
+        data = res.json()
+
+        # Returned token user claim must be patient
+        self.assertEqual(data["user"]["role"], "patient")
+
+        # Database record must be patient
+        user = get_user_by_email("attacker@example.com")
+        self.assertIsNotNone(user)
+        self.assertEqual(user["role"], "patient")
+
     def test_role_based_access_control_and_isolation(self) -> None:
         """
         Verify RBAC permissions:
@@ -148,6 +175,9 @@ class TestRoleBasedAuth(unittest.TestCase):
         - Lab assistants can access /lab/* routes without access to AI summaries.
         - Patients cannot access /lab/* and Lab Assistants cannot access /patient/*.
         """
+        from medexplain.auth import create_access_token, hash_password
+        from medexplain.db import create_user
+
         # Register patient 1
         p1_res = self.client.post(
             "/api/v1/auth/signup",
@@ -164,12 +194,9 @@ class TestRoleBasedAuth(unittest.TestCase):
         p2_token = p2_res["access_token"]
         p2_headers = {"Authorization": f"Bearer {p2_token}"}
 
-        # Register lab assistant
-        lab_res = self.client.post(
-            "/api/v1/auth/signup",
-            json={"email": "lab1@example.com", "password": "Password123!", "role": "lab_assistant", "full_name": "Tech Alex"},
-        ).json()
-        lab_token = lab_res["access_token"]
+        # Provision lab assistant via direct DB/admin function (simulating admin script creation)
+        lab_user = create_user("lab1@example.com", hash_password("Password123!"), "lab_assistant", "Tech Alex")
+        lab_token = create_access_token(lab_user["id"], lab_user["email"], lab_user["role"], lab_user["full_name"])
         lab_headers = {"Authorization": f"Bearer {lab_token}"}
 
         # 1. Patient accessing /patient/my-reports -> OK
