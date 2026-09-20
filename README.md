@@ -160,8 +160,8 @@ If any check fails, `approved` is set to `False` with detailed revision hints, r
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-org/medexplain-ai.git
-   cd medexplain-ai
+   git clone https://github.com/Dananga22/IRWA-Project.git
+   cd IRWA-Project
    ```
 
 2. **Create and activate a virtual environment:**
@@ -270,7 +270,6 @@ python -m unittest tests.test_auth tests.test_care_guide tests.test_crypto tests
 ## Known Limitations
 
 1. **Knowledge Base Scope:** The RAG retrieval corpus (`knowledge_base/corpus.json`) contains 59 passages covering primary blood panels (CBC, Lipid, Metabolic, HbA1c, Thyroid, Renal). For rare or unindexed analytes, the system intentionally **abstains** from generating an explanation rather than hallucinating medical facts.
-2. **Tamil Localization Exposure:** Backend validation dictionaries and script checks support Tamil (`ta`), but the current user interface modal exposes an English / Sinhala toggle button (`en` / `si`).
 
 ---
 
@@ -278,10 +277,10 @@ python -m unittest tests.test_auth tests.test_care_guide tests.test_crypto tests
 
 | Name | Role | Specialization |
 |---|---|---|
-| **[Student Name]** | Lead Developer / Architect | Agentic Pipelines & RAG Retrieval |
-| **[Student Name]** | Security & Backend Engineer | Cryptography, Auth & RBAC |
-| **[Student Name]** | AI & NLP Engineer | Entity Extraction & Responsible AI Safety |
-| **[Student Name]** | Frontend & UX Engineer | Patient Portal & UI/UX |
+| **Gayani & Dananga** | Lead Developer / Architect | Agentic Pipelines & RAG Retrieval |
+| **Yuwanima & Savina** | Security & Backend Engineer | Cryptography, Auth & RBAC |
+| **Gayani & Dananga** | AI & NLP Engineer | Entity Extraction & Responsible AI Safety |
+| **Yuwanima & Savina** | Frontend & UX Engineer | Patient Portal & UI/UX |
 
 ---
 
