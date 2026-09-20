@@ -1,0 +1,836 @@
+{
+  "corpus_version": "1.1",
+  "description": "Curated patient-education passages about common laboratory analytes, plus general lifestyle guidance passages, drawn from MedlinePlus (US National Library of Medicine), CDC, WHO and NHLBI. Each passage carries its source title and URL so every generated claim can be cited. Passages are tagged kind='explanation' (what a test measures) or kind='guidance' (general lifestyle information, used only by the Care Guide agent). Educational content only - contains no diagnostic or prescriptive guidance.",
+  "license_note": "Passages are summaries written for this project from the cited public-health pages. Run scripts/verify_sources.py to confirm every source_url still resolves before an evaluation.",
+  "passages": [
+    {
+      "id": "mp-hba1c-001",
+      "title": "Hemoglobin A1C (HbA1c) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/",
+      "analytes": [
+        "HbA1c",
+        "Hemoglobin A1c",
+        "A1C",
+        "Glycated Hemoglobin"
+      ],
+      "text": "The hemoglobin A1c test shows the average level of blood glucose over the past two to three months. Glucose in the blood attaches to hemoglobin inside red blood cells, and the test measures the percentage of red blood cells carrying glucose-coated hemoglobin. Because red blood cells live for about three months, the result reflects a longer period than a single glucose reading. It is commonly reported as a percentage.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-hba1c-002",
+      "title": "Hemoglobin A1C (HbA1c) Test - Understanding Results",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/",
+      "analytes": [
+        "HbA1c",
+        "Hemoglobin A1c",
+        "A1C"
+      ],
+      "text": "Commonly cited HbA1c reference bands are: below 5.7 percent described as normal, 5.7 to 6.4 percent described as prediabetes range, and 6.5 percent or higher described as the diabetes range. These bands are general guidelines rather than individual targets. A person's own target percentage depends on their circumstances and is set by their healthcare provider, so results should be discussed with a clinician.",
+      "kind": "explanation"
+    },
+    {
+      "id": "cdc-diabetes-001",
+      "title": "Diabetes Testing",
+      "source": "CDC",
+      "source_url": "https://www.cdc.gov/diabetes/diabetes-testing/index.html",
+      "analytes": [
+        "HbA1c",
+        "Glucose",
+        "Fasting Glucose",
+        "Blood Sugar"
+      ],
+      "text": "Several blood tests are used to check blood sugar, including the A1C test, the fasting plasma glucose test and the oral glucose tolerance test. A single out-of-range reading is usually repeated or confirmed with another test before any conclusion is drawn. Results are interpreted together with a person's history rather than in isolation.",
+      "kind": "explanation"
+    },
+    {
+      "id": "who-diabetes-001",
+      "title": "Diabetes fact sheet",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/diabetes",
+      "analytes": [
+        "Glucose",
+        "Blood Sugar",
+        "HbA1c"
+      ],
+      "text": "Raised blood glucose over long periods is associated with damage to blood vessels, nerves, eyes and kidneys. Regular monitoring, physical activity, a balanced diet and follow-up with a health worker are the main components of long-term management. Many people with raised blood glucose have no symptoms, which is why laboratory testing matters.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-glucose-001",
+      "title": "Blood Glucose Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/blood-glucose-test/",
+      "analytes": [
+        "Glucose",
+        "Fasting Glucose",
+        "Blood Sugar",
+        "FBS"
+      ],
+      "text": "A blood glucose test measures the amount of glucose, the body's main source of energy, in a blood sample. Fasting samples are taken after not eating for a set period, usually eight hours, so results are not affected by a recent meal. Glucose readings vary through the day and are influenced by food, activity, illness and stress, so a single value is only a snapshot.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-cbc-001",
+      "title": "Complete Blood Count (CBC)",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/complete-blood-count-cbc/",
+      "analytes": [
+        "CBC",
+        "Complete Blood Count",
+        "Hemoglobin",
+        "Hematocrit",
+        "WBC",
+        "RBC",
+        "Platelets",
+        "MCV"
+      ],
+      "text": "A complete blood count measures the number and size of the different cells in the blood. It reports red blood cells, white blood cells, platelets, hemoglobin, hematocrit and mean corpuscular volume. It is one of the most commonly ordered panels and is often used as a general check of overall blood health.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-hemoglobin-001",
+      "title": "Hemoglobin Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/hemoglobin-test/",
+      "analytes": [
+        "Hemoglobin",
+        "Hgb",
+        "HGB",
+        "Hb"
+      ],
+      "text": "Hemoglobin is the protein inside red blood cells that carries oxygen from the lungs to the rest of the body and carries carbon dioxide back. A hemoglobin measurement below the usual range is often described as anaemia. Typical reference ranges differ between adult men, adult women and children, and laboratories publish their own ranges alongside the result.",
+      "kind": "explanation"
+    },
+    {
+      "id": "who-anaemia-001",
+      "title": "Anaemia fact sheet",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/anaemia",
+      "analytes": [
+        "Hemoglobin",
+        "Hgb",
+        "Anaemia",
+        "Ferritin",
+        "Iron"
+      ],
+      "text": "Anaemia is a condition in which the number of red blood cells or the haemoglobin concentration within them is lower than normal, reducing the blood's capacity to carry oxygen. Common contributing factors worldwide include nutritional deficiencies, particularly iron, as well as infections and inflammation. Tiredness, weakness and shortness of breath are frequently reported, though many people notice nothing at all.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-hematocrit-001",
+      "title": "Hematocrit Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/hematocrit-test/",
+      "analytes": [
+        "Hematocrit",
+        "HCT",
+        "PCV"
+      ],
+      "text": "The hematocrit measures the proportion of the blood made up of red blood cells, reported as a percentage. It usually moves in the same direction as hemoglobin. Hydration affects the value: dehydration can raise it and excess fluid can lower it, so it is read alongside the rest of the blood count.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-wbc-001",
+      "title": "White Blood Count (WBC)",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/white-blood-count-wbc/",
+      "analytes": [
+        "WBC",
+        "White Blood Cells",
+        "Leukocytes",
+        "TLC"
+      ],
+      "text": "White blood cells are part of the immune system and help the body fight infection. A white blood count measures how many are present in a sample of blood. Counts above the usual range are commonly seen during infection, inflammation, physical stress or after strenuous exercise. Counts below the usual range can follow certain infections or medicines.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-platelets-001",
+      "title": "Platelet Tests",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/platelet-tests/",
+      "analytes": [
+        "Platelets",
+        "PLT",
+        "Thrombocytes"
+      ],
+      "text": "Platelets are small cell fragments that help blood clot and stop bleeding. A platelet count reports how many are in a given volume of blood. Values above the usual range may follow inflammation, infection or bleeding, while lower values are associated with easier bruising or bleeding. Counts are interpreted with the rest of the blood count and the person's history.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-rbc-001",
+      "title": "Red Blood Cell (RBC) Count",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/red-blood-cell-rbc-count/",
+      "analytes": [
+        "RBC",
+        "Red Blood Cells",
+        "Erythrocytes"
+      ],
+      "text": "A red blood cell count measures how many red blood cells are in a sample. Red blood cells carry oxygen around the body. The count is usually read together with hemoglobin, hematocrit and the red cell indices such as MCV, because the pattern across all of them is more informative than any single number.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-mcv-001",
+      "title": "MCV (Mean Corpuscular Volume)",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/mcv-mean-corpuscular-volume/",
+      "analytes": [
+        "MCV",
+        "Mean Corpuscular Volume"
+      ],
+      "text": "MCV describes the average size of red blood cells. Cells that are smaller than usual and cells that are larger than usual point to different underlying patterns, which is why MCV is reported alongside hemoglobin. It is a descriptive measure of cell size and is not meaningful on its own.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-cholesterol-001",
+      "title": "Cholesterol Levels",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+      "analytes": [
+        "Cholesterol",
+        "Total Cholesterol",
+        "Lipid Panel"
+      ],
+      "text": "A cholesterol test, sometimes called a lipid panel or lipid profile, measures total cholesterol, LDL cholesterol, HDL cholesterol and triglycerides. Cholesterol is a waxy fat-like substance the body needs in small amounts, and the balance between the different types matters more than the total alone.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-ldl-001",
+      "title": "LDL Cholesterol",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+      "analytes": [
+        "LDL",
+        "LDL-C",
+        "LDL Cholesterol",
+        "Bad Cholesterol"
+      ],
+      "text": "LDL is often called bad cholesterol and is described as the main source of blockages in the arteries. Higher amounts are associated with plaque building up in artery walls, which raises the risk of coronary artery disease and related heart and circulation problems over time. For cardiovascular health the general aim is a lower LDL level.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-hdl-001",
+      "title": "HDL Cholesterol",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+      "analytes": [
+        "HDL",
+        "HDL-C",
+        "HDL Cholesterol",
+        "Good Cholesterol"
+      ],
+      "text": "HDL is often called good cholesterol because it helps remove LDL cholesterol from the body. Higher HDL levels are associated with a lower chance of heart attack and stroke. Unlike LDL, a higher HDL result is generally regarded as the more favourable direction.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-triglycerides-001",
+      "title": "Triglycerides",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+      "analytes": [
+        "Triglycerides",
+        "TG",
+        "TRIG"
+      ],
+      "text": "Triglycerides are a type of fat found in the blood. Higher levels may raise the risk of heart disease, and this association has been noted particularly in women. Laboratories can also use the triglyceride value to estimate VLDL cholesterol. Recent meals and alcohol strongly affect triglyceride readings, which is why fasting samples are often requested.",
+      "kind": "explanation"
+    },
+    {
+      "id": "who-cvd-001",
+      "title": "Cardiovascular diseases fact sheet",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/cardiovascular-diseases-(cvds)",
+      "analytes": [
+        "Cholesterol",
+        "LDL",
+        "Triglycerides",
+        "Blood Pressure"
+      ],
+      "text": "Most cardiovascular disease can be influenced by addressing behavioural factors such as tobacco use, unhealthy diet, physical inactivity and harmful use of alcohol. Raised blood lipids and raised blood pressure are among the intermediate measures used to assess risk. Identifying risk early allows counselling and follow-up with a health worker.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-creatinine-001",
+      "title": "Creatinine Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/creatinine-test/",
+      "analytes": [
+        "Creatinine",
+        "Serum Creatinine",
+        "CREA"
+      ],
+      "text": "Creatinine is a waste product produced by normal muscle activity and removed from the blood by the kidneys. Measuring it helps show how well the kidneys are filtering. Muscle mass, hydration, age and diet all influence the value, so results are read in context rather than as a standalone number.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-egfr-001",
+      "title": "Glomerular Filtration Rate (GFR) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/glomerular-filtration-rate-gfr-test/",
+      "analytes": [
+        "eGFR",
+        "GFR",
+        "Glomerular Filtration Rate"
+      ],
+      "text": "The estimated glomerular filtration rate is calculated from the blood creatinine level together with factors such as age and sex. It estimates how much blood the kidneys filter each minute. Because it is an estimate derived from a formula rather than a direct measurement, it is interpreted together with other kidney tests.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-bun-001",
+      "title": "BUN (Blood Urea Nitrogen) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/bun-blood-urea-nitrogen-test/",
+      "analytes": [
+        "BUN",
+        "Blood Urea Nitrogen",
+        "Urea"
+      ],
+      "text": "Blood urea nitrogen measures the amount of urea nitrogen in the blood, a waste product formed when protein is broken down. The kidneys normally remove it. Levels are affected by protein intake, hydration and some medicines as well as kidney function, and BUN is usually reported alongside creatinine.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-sodium-001",
+      "title": "Sodium Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/sodium-blood-test/",
+      "analytes": [
+        "Sodium",
+        "Na",
+        "Na+"
+      ],
+      "text": "Sodium is an electrolyte that helps control the amount of fluid in the body and supports normal nerve and muscle function. Blood sodium is tightly regulated, so results outside the usual range are followed up promptly. Fluid intake, medicines and fluid losses all influence the value.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-potassium-001",
+      "title": "Potassium Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/potassium-blood-test/",
+      "analytes": [
+        "Potassium",
+        "K",
+        "K+"
+      ],
+      "text": "Potassium is an electrolyte that supports normal nerve and muscle activity, including the muscle cells of the heart. Because the heart is sensitive to potassium, values well outside the usual range are treated as needing prompt clinical attention. Sample handling can also affect the result, so unexpected values are sometimes repeated.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-calcium-001",
+      "title": "Calcium Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/calcium-blood-test/",
+      "analytes": [
+        "Calcium",
+        "Ca",
+        "Serum Calcium"
+      ],
+      "text": "Calcium is essential for bones and teeth and also plays a role in nerve signalling, muscle movement and blood clotting. A blood calcium test measures the calcium circulating in the blood, which is only a small fraction of the body's total. Albumin levels influence the measured value, so the two are often read together.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-alt-001",
+      "title": "ALT (Alanine Aminotransferase) Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/alt-alanine-transaminase-test/",
+      "analytes": [
+        "ALT",
+        "SGPT",
+        "Alanine Aminotransferase"
+      ],
+      "text": "ALT is an enzyme found mostly in the liver. When liver cells are stressed or damaged, ALT is released into the blood, so higher levels are used as a general signal that the liver may need further assessment. Strenuous exercise, some medicines and several common conditions can also raise ALT.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-ast-001",
+      "title": "AST (Aspartate Aminotransferase) Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/ast-test/",
+      "analytes": [
+        "AST",
+        "SGOT",
+        "Aspartate Aminotransferase"
+      ],
+      "text": "AST is an enzyme found in the liver, heart, muscles and other tissues. Because it is present in several places, an AST result is interpreted alongside ALT rather than alone. The ratio and pattern between the two enzymes is more informative than either value in isolation.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-bilirubin-001",
+      "title": "Bilirubin Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/bilirubin-blood-test/",
+      "analytes": [
+        "Bilirubin",
+        "Total Bilirubin",
+        "Direct Bilirubin"
+      ],
+      "text": "Bilirubin is a yellowish substance produced when red blood cells break down. The liver processes it so it can leave the body. Higher blood levels can cause yellowing of the skin or eyes. Both total and direct bilirubin may be reported, and the split between them helps direct further assessment.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-albumin-001",
+      "title": "Albumin Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/albumin-blood-test/",
+      "analytes": [
+        "Albumin",
+        "ALB",
+        "Serum Albumin"
+      ],
+      "text": "Albumin is a protein made by the liver that keeps fluid inside blood vessels and carries substances such as hormones and medicines around the body. A blood albumin measurement is used as a general indicator of liver function and nutritional state, and is read together with other liver and kidney tests.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-tsh-001",
+      "title": "TSH (Thyroid-Stimulating Hormone) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/tsh-thyroid-stimulating-hormone-test/",
+      "analytes": [
+        "TSH",
+        "Thyroid Stimulating Hormone",
+        "Thyrotropin"
+      ],
+      "text": "TSH is made by the pituitary gland and tells the thyroid how much thyroid hormone to produce. Because of this feedback relationship, TSH moves in the opposite direction to thyroid hormone: a higher TSH generally accompanies an underactive thyroid and a lower TSH an overactive one. TSH is usually the first thyroid test performed.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-t4-001",
+      "title": "T4 (Thyroxine) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/t4-thyroxine-test/",
+      "analytes": [
+        "T4",
+        "Free T4",
+        "FT4",
+        "Thyroxine"
+      ],
+      "text": "T4, or thyroxine, is one of the main hormones made by the thyroid gland and helps control how the body uses energy. Free T4 measures the portion not bound to protein. It is usually ordered together with TSH, because the two results together describe thyroid activity better than either alone.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-t3-001",
+      "title": "T3 (Triiodothyronine) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/t3-thyroid-hormone-test/",
+      "analytes": [
+        "T3",
+        "Free T3",
+        "FT3",
+        "Triiodothyronine"
+      ],
+      "text": "T3 is the more active thyroid hormone and helps regulate metabolism, heart rate and body temperature. It is often measured when TSH and T4 results need clarification. Non-thyroid illness can lower T3, so it is not usually used as a standalone screening test.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-ferritin-001",
+      "title": "Ferritin Blood Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/ferritin-blood-test/",
+      "analytes": [
+        "Ferritin",
+        "Iron Stores"
+      ],
+      "text": "Ferritin is a protein that stores iron in the body, and the blood ferritin level reflects how much iron is being stored. Lower values are associated with depleted iron stores. Ferritin also rises during inflammation, which is why it is interpreted alongside other iron studies and markers of inflammation.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-iron-001",
+      "title": "Iron Tests",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/iron-tests/",
+      "analytes": [
+        "Iron",
+        "Serum Iron",
+        "TIBC",
+        "Transferrin Saturation"
+      ],
+      "text": "Iron tests measure the amount of iron in the blood and how well it is being carried and stored. A panel may include serum iron, total iron binding capacity and transferrin saturation. Iron levels vary through the day and after meals containing iron, so sample timing affects the reading.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-vitd-001",
+      "title": "Vitamin D Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/vitamin-d-test/",
+      "analytes": [
+        "Vitamin D",
+        "25-OH Vitamin D",
+        "25-Hydroxyvitamin D"
+      ],
+      "text": "A vitamin D test measures the level of vitamin D in the blood, most often as 25-hydroxyvitamin D. Vitamin D helps the body absorb calcium and supports bone health. Levels are influenced by sun exposure, diet, skin tone and supplement use, and vary seasonally in many populations.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-crp-001",
+      "title": "C-Reactive Protein (CRP) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/c-reactive-protein-crp-test/",
+      "analytes": [
+        "CRP",
+        "C-Reactive Protein",
+        "hs-CRP"
+      ],
+      "text": "C-reactive protein is made by the liver and rises when there is inflammation somewhere in the body. A raised CRP shows that inflammation is present but does not indicate where it is or what is causing it. It is a non-specific marker and is always interpreted with other information.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-uricacid-001",
+      "title": "Uric Acid Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/uric-acid-test/",
+      "analytes": [
+        "Uric Acid",
+        "Urate"
+      ],
+      "text": "Uric acid is a waste product formed when the body breaks down purines, substances found in some foods and in the body's own cells. Most uric acid is removed by the kidneys. Levels are influenced by diet, alcohol, hydration, some medicines and kidney function.",
+      "kind": "explanation"
+    },
+    {
+      "id": "mp-esr-001",
+      "title": "Erythrocyte Sedimentation Rate (ESR) Test",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/erythrocyte-sedimentation-rate-esr/",
+      "analytes": [
+        "ESR",
+        "Sed Rate",
+        "Erythrocyte Sedimentation Rate"
+      ],
+      "text": "The erythrocyte sedimentation rate measures how quickly red blood cells settle at the bottom of a test tube over one hour. A faster rate is associated with inflammation in the body. Like CRP it is a general, non-specific marker and does not identify the location or cause of inflammation.",
+      "kind": "explanation"
+    },
+    {
+      "id": "gen-refrange-001",
+      "title": "Understanding Laboratory Reference Ranges",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/",
+      "analytes": [
+        "Reference Range",
+        "Normal Range",
+        "General"
+      ],
+      "text": "A reference range is the set of values commonly seen in a healthy population, and it can differ between laboratories because of differences in equipment and methods. A result slightly outside the range does not automatically indicate a problem, and a result inside the range does not rule one out. Results are always read alongside symptoms, history and other tests.",
+      "kind": "explanation"
+    },
+    {
+      "id": "gen-variation-001",
+      "title": "Why Laboratory Values Vary",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/",
+      "analytes": [
+        "General",
+        "Variation"
+      ],
+      "text": "Laboratory values fluctuate for many ordinary reasons, including hydration, recent meals, time of day, physical activity, stress, recent illness, pregnancy and medicines. Repeating a test at a later date often gives a different number. Trends across several tests over time are usually more informative than one isolated result.",
+      "kind": "explanation"
+    },
+    {
+      "id": "gen-nextsteps-001",
+      "title": "Discussing Results With a Healthcare Provider",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/",
+      "analytes": [
+        "General",
+        "Next Steps"
+      ],
+      "text": "Laboratory results are one input into a clinical picture and are meant to be interpreted by a qualified healthcare provider who knows the person's history. Useful questions to bring to an appointment include how a result compares with previous tests, whether it should be repeated, and what if anything should change. Automated explanations are educational and do not replace that conversation.",
+      "kind": "explanation"
+    },
+    {
+      "id": "gen-urgent-001",
+      "title": "When Laboratory Results Need Prompt Attention",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/",
+      "analytes": [
+        "General",
+        "Critical Values",
+        "Urgent"
+      ],
+      "text": "Some laboratory values fall far enough outside the usual range that laboratories contact the ordering clinician directly, because they may need attention without delay. Examples of measurements treated this way include severely abnormal potassium, sodium, glucose, haemoglobin and platelet results. If a report carries such a value, the appropriate action is to contact a healthcare provider promptly rather than to seek an explanation online.",
+      "kind": "explanation"
+    },
+    {
+      "id": "who-diet-001",
+      "section": "eating",
+      "analytes": [
+        "General",
+        "Cholesterol",
+        "LDL",
+        "Triglycerides",
+        "Glucose",
+        "HbA1c",
+        "Blood Sugar",
+        "Total Cholesterol"
+      ],
+      "title": "Healthy diet fact sheet",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "text": "WHO describes a healthy diet for adults as one built around fruit, vegetables, legumes, nuts and whole grains, with at least 400 g of fruit and vegetables a day. It advises keeping free sugars below 10% of total energy intake, keeping total fat below 30% of energy with unsaturated fats preferred over saturated fats, and avoiding industrially produced trans fats.",
+      "kind": "guidance"
+    },
+    {
+      "id": "who-diet-002",
+      "section": "eating",
+      "analytes": [
+        "Sodium",
+        "Na",
+        "Blood Pressure",
+        "General"
+      ],
+      "title": "Healthy diet fact sheet - salt",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "text": "WHO advises keeping salt intake to less than 5 g a day, which is roughly one level teaspoon, and using iodised salt. Most salt in the diet comes from processed foods and from salt added during cooking or at the table rather than from the salt shaker alone.",
+      "kind": "guidance"
+    },
+    {
+      "id": "who-diet-003",
+      "section": "eating",
+      "analytes": [
+        "LDL",
+        "Cholesterol",
+        "Total Cholesterol",
+        "Triglycerides",
+        "Non-HDL Cholesterol"
+      ],
+      "title": "Healthy diet fact sheet - fats",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "text": "WHO describes replacing saturated fats and trans fats with unsaturated fats as a way to reduce unhealthy blood lipid levels across a population. Unsaturated fats are found in foods such as fish, avocado, nuts, and sunflower, soybean, canola and olive oils, while saturated fats occur in fatty meat, butter, palm and coconut oil, cream, cheese and ghee.",
+      "kind": "guidance"
+    },
+    {
+      "id": "who-diet-004",
+      "section": "eating",
+      "analytes": [
+        "Glucose",
+        "Blood Sugar",
+        "HbA1c",
+        "Fasting Blood Glucose",
+        "Triglycerides"
+      ],
+      "title": "Healthy diet fact sheet - sugars",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/healthy-diet",
+      "text": "WHO advises limiting free sugars, which include sugars added to foods and drinks as well as those naturally present in honey, syrups and fruit juices. Sugar-sweetened drinks are described as a major source of free sugars, and reducing them is presented as one of the more straightforward dietary changes at a population level.",
+      "kind": "guidance"
+    },
+    {
+      "id": "who-activity-001",
+      "section": "activity",
+      "analytes": [
+        "General",
+        "Glucose",
+        "HbA1c",
+        "Cholesterol",
+        "LDL",
+        "HDL",
+        "Triglycerides",
+        "Blood Sugar"
+      ],
+      "title": "Physical activity fact sheet",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "text": "WHO's global recommendation for adults is at least 150 minutes of moderate-intensity physical activity per week. Physical activity means any bodily movement produced by skeletal muscles, including walking, cycling, household tasks and active recreation, not only structured exercise or sport.",
+      "kind": "guidance"
+    },
+    {
+      "id": "who-activity-002",
+      "section": "activity",
+      "analytes": [
+        "General"
+      ],
+      "title": "Physical activity fact sheet - sedentary time",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "text": "WHO notes that all age groups should limit the amount of time spent being sedentary, and that muscle strengthening benefits everyone. Any amount of activity is described as better than none, and people who are currently inactive are encouraged to start with small amounts and build up gradually.",
+      "kind": "guidance"
+    },
+    {
+      "id": "cdc-activity-001",
+      "section": "activity",
+      "analytes": [
+        "General",
+        "Glucose",
+        "HbA1c",
+        "Cholesterol"
+      ],
+      "title": "Adult activity guidelines",
+      "source": "CDC",
+      "source_url": "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html",
+      "text": "CDC's adult guidance describes a weekly combination of moderate-intensity aerobic activity and muscle-strengthening activity on two or more days. It notes that activity can be spread across the week in sessions of any length, and that moderate intensity means being able to talk but not sing during the activity.",
+      "kind": "guidance"
+    },
+    {
+      "id": "mp-chol-diet-001",
+      "section": "eating",
+      "analytes": [
+        "LDL",
+        "Cholesterol",
+        "Total Cholesterol",
+        "Non-HDL Cholesterol",
+        "HDL",
+        "Triglycerides",
+        "LDL Cholesterol"
+      ],
+      "title": "How to lower cholesterol with diet",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/howtolowercholesterolwithdiet.html",
+      "text": "MedlinePlus describes dietary changes commonly associated with lower blood cholesterol: choosing foods lower in saturated fat, increasing soluble fibre from foods such as oats, beans, lentils and fruit, and including more fish and plant oils in place of animal fats. It notes that changes in diet are usually considered alongside other factors by a clinician rather than in isolation.",
+      "kind": "guidance"
+    },
+    {
+      "id": "nhlbi-dash-001",
+      "section": "eating",
+      "analytes": [
+        "Sodium",
+        "Blood Pressure",
+        "Cholesterol",
+        "LDL",
+        "General"
+      ],
+      "title": "DASH eating plan",
+      "source": "NHLBI",
+      "source_url": "https://www.nhlbi.nih.gov/education/dash-eating-plan",
+      "text": "The DASH eating pattern published by NHLBI emphasises vegetables, fruit and whole grains, with fat-free or low-fat dairy, fish, poultry, beans, nuts and vegetable oils, and limits foods high in saturated fat as well as sugar-sweetened beverages and sweets. It is described as an overall pattern of eating rather than a short-term diet.",
+      "kind": "guidance"
+    },
+    {
+      "id": "cdc-diabetes-eating-001",
+      "section": "eating",
+      "analytes": [
+        "Glucose",
+        "HbA1c",
+        "Blood Sugar",
+        "Fasting Blood Glucose",
+        "90 Day Average Blood Glucose"
+      ],
+      "title": "Healthy eating for blood sugar",
+      "source": "CDC",
+      "source_url": "https://www.cdc.gov/diabetes/healthy-eating/index.html",
+      "text": "CDC describes carbohydrate-containing foods as having the largest effect on blood sugar, and presents balanced meals combining non-starchy vegetables, protein foods and a controlled portion of carbohydrate as the general approach discussed with a care team. It emphasises that individual plans differ and are set with a healthcare professional or dietitian.",
+      "kind": "guidance"
+    },
+    {
+      "id": "mp-iron-diet-001",
+      "section": "eating",
+      "analytes": [
+        "Iron",
+        "Ferritin",
+        "Hemoglobin",
+        "Hematocrit",
+        "Transferrin Saturation",
+        "Total Iron Binding Capacity"
+      ],
+      "title": "Iron in diet",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/ency/article/002422.htm",
+      "text": "MedlinePlus lists dietary sources of iron including lean red meat, poultry, fish, beans, lentils, tofu and dark green leafy vegetables, and notes that vitamin C-containing foods eaten in the same meal help the body absorb iron from plant sources. It also notes that iron needs differ by age, sex and pregnancy status.",
+      "kind": "guidance"
+    },
+    {
+      "id": "mp-vitd-source-001",
+      "section": "habits",
+      "analytes": [
+        "Vitamin D",
+        "25-OH Vitamin D",
+        "Calcium"
+      ],
+      "title": "Vitamin D",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/vitamind.html",
+      "text": "MedlinePlus describes vitamin D as coming from sunlight on the skin, from a small number of foods such as oily fish and egg yolks, and from fortified foods. It notes that the amount made from sunlight depends on season, latitude, time of day and skin tone, and that requirements differ between individuals.",
+      "kind": "guidance"
+    },
+    {
+      "id": "who-tobacco-001",
+      "section": "habits",
+      "analytes": [
+        "General",
+        "Cholesterol",
+        "LDL",
+        "HDL",
+        "Blood Pressure"
+      ],
+      "title": "Tobacco fact sheet",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/tobacco",
+      "text": "WHO identifies tobacco use as a leading preventable cause of cardiovascular disease and describes stopping as beneficial at any age. Support services and cessation programmes are described as substantially improving the chance of quitting compared with attempting it unaided.",
+      "kind": "guidance"
+    },
+    {
+      "id": "who-alcohol-001",
+      "section": "habits",
+      "analytes": [
+        "General",
+        "Triglycerides",
+        "SGPT",
+        "SGOT",
+        "ALT",
+        "AST",
+        "Gamma Glutamyl Transferase",
+        "Uric Acid"
+      ],
+      "title": "Alcohol fact sheet",
+      "source": "WHO",
+      "source_url": "https://www.who.int/news-room/fact-sheets/detail/alcohol",
+      "text": "WHO states that no level of alcohol consumption is considered safe for health, and describes alcohol as contributing to liver disease and to a range of other conditions. Reducing intake is described as reducing risk, with the benefit increasing the more consumption is reduced.",
+      "kind": "guidance"
+    },
+    {
+      "id": "gen-hydration-001",
+      "section": "habits",
+      "analytes": [
+        "Blood Urea",
+        "Blood Urea Nitrogen",
+        "BUN",
+        "Creatinine",
+        "Urinary Specific Gravity",
+        "Sodium",
+        "Urine Quantity"
+      ],
+      "title": "Fluid and electrolyte balance",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/fluidandelectrolytebalance.html",
+      "text": "MedlinePlus explains that the body needs a balance of fluid and electrolytes to work normally, and that this balance is affected by how much is taken in and how much is lost through urine, sweating, vomiting or diarrhoea. It notes that the kidneys play a central role in maintaining that balance and that fluid needs differ between people and conditions.",
+      "kind": "guidance"
+    },
+    {
+      "id": "gen-seekcare-001",
+      "section": "seek_care",
+      "analytes": [
+        "General"
+      ],
+      "title": "Discussing results with a healthcare provider",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/",
+      "text": "MedlinePlus advises discussing laboratory results with the healthcare provider who ordered them, because results are interpreted alongside symptoms, history, medicines and previous tests. It notes that a provider should be contacted before making changes based on a result, and sooner if new or worsening symptoms appear.",
+      "kind": "guidance"
+    },
+    {
+      "id": "gen-seekcare-002",
+      "section": "seek_care",
+      "analytes": [
+        "General",
+        "Critical Values"
+      ],
+      "title": "When laboratory results need prompt attention",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/",
+      "text": "Some laboratory values fall far enough outside the usual range that laboratories contact the ordering clinician directly. If a report carries such a value, or if symptoms such as chest pain, severe breathlessness, confusion or fainting occur, the appropriate action is to seek medical attention promptly rather than to look for an explanation online.",
+      "kind": "guidance"
+    },
+    {
+      "id": "gen-responds-001",
+      "section": "responds_to",
+      "analytes": [
+        "General"
+      ],
+      "title": "Why laboratory values vary",
+      "source": "MedlinePlus",
+      "source_url": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/",
+      "text": "Laboratory values fluctuate for ordinary reasons including hydration, recent meals, time of day, physical activity, stress, recent illness, pregnancy and medicines. A single result is a snapshot, and trends across repeated tests are usually more informative than one isolated value.",
+      "kind": "guidance"
+    }
+  ]
+}

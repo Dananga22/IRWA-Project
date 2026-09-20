@@ -3,6 +3,7 @@
 .env.local
 *.key
 *.pem
+certs/
 
 # Python
 __pycache__/
@@ -47,6 +48,10 @@ ENV/
 tmp/
 .tmp/
 *.log
+*_out.txt
+*_err.txt
+test_output*.txt
+temp_test_output.txt
 
 # Node & Frontend
 node_modules/
@@ -59,3 +64,9 @@ out/
 .idea/
 .DS_Store
 Thumbs.db
+
+# MedExplain AI - generated artifacts
+knowledge_base/index/
+logs/
+temp_uploads/
+medexplain_demo.db

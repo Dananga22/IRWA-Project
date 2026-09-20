@@ -69,6 +69,55 @@ ALIAS_MAP: Dict[str, str] = {
     "white blood cell count": "white_cell_count",
     "leukocytes": "white_cell_count",
     "total wbc": "white_cell_count",
+    # Red Blood Cell Count
+    "rbc": "red_cell_count",
+    "red cell count": "red_cell_count",
+    "red blood cell count": "red_cell_count",
+    "erythrocytes": "red_cell_count",
+    "total rbc": "red_cell_count",
+    # Hematocrit
+    "hematocrit": "hematocrit",
+    "haematocrit": "hematocrit",
+    "hct": "hematocrit",
+    "pcv": "hematocrit",
+    "packed cell volume": "hematocrit",
+    # Platelets
+    "platelet": "platelets",
+    "platelets": "platelets",
+    "platelet count": "platelets",
+    "plt": "platelets",
+    # BUN
+    "bun": "bun",
+    "blood urea nitrogen": "bun",
+    "urea nitrogen": "bun",
+    "urea": "bun",
+    # Sodium
+    "sodium": "sodium",
+    "na": "sodium",
+    "serum sodium": "sodium",
+    # Potassium
+    "potassium": "potassium",
+    "k": "potassium",
+    "serum potassium": "potassium",
+    # Chloride
+    "chloride": "chloride",
+    "cl": "chloride",
+    "serum chloride": "chloride",
+    # Calcium
+    "calcium": "calcium",
+    "ca": "calcium",
+    "total calcium": "calcium",
+    # Bilirubin
+    "bilirubin": "total_bilirubin",
+    "total bilirubin": "total_bilirubin",
+    "t.bilirubin": "total_bilirubin",
+    # Albumin
+    "albumin": "albumin",
+    "serum albumin": "albumin",
+    "alb": "albumin",
+    # Uric Acid
+    "uric acid": "uric_acid",
+    "serum uric acid": "uric_acid",
 }
 
 # General regex pattern for extracting test name, value, unit, reference range, and flag
@@ -102,4 +151,16 @@ DEFAULT_REF_RANGES: Dict[str, Tuple[float, float]] = {
     "tsh": (0.4, 4.0),               # mIU/L
     "vitamin_d": (30.0, 100.0),      # ng/mL
     "white_cell_count": (4.5, 11.0), # x10^3/uL
+    "red_cell_count": (4.3, 5.9),    # x10^6/uL
+    "hematocrit": (41.0, 50.0),      # %
+    "platelets": (150.0, 450.0),     # x10^3/uL
+    "bun": (7.0, 20.0),              # mg/dL
+    "sodium": (136.0, 145.0),        # mEq/L
+    "potassium": (3.5, 5.1),         # mEq/L
+    "chloride": (96.0, 106.0),       # mEq/L
+    "calcium": (8.5, 10.2),          # mg/dL
+    "total_bilirubin": (0.2, 1.2),   # mg/dL
+    "albumin": (3.4, 5.4),           # g/dL
+    "uric_acid": (3.5, 7.2),         # mg/dL
 }
+

@@ -191,4 +191,28 @@ def extract_values(text: str) -> List[LabValue]:
             results.append(lab_val)
             logger.info(f"Extracted Lab Value: {display_name} = {val} {unit} [{flag}]")
 
+    if not results:
+        try:
+            from medexplain.extraction import extract_test_items
+            fallback_items = extract_test_items("", text)
+            for item in fallback_items:
+                display_name = str(item.get("test_name", "")).strip()
+                val = float(item.get("value", 0.0))
+                unit = str(item.get("unit", "")).strip()
+                ref_range = str(item.get("reference_range", "")).strip()
+                flag = str(item.get("flag", "UNKNOWN")).strip().upper()
+                lab_val = LabValue(
+                    test_name=display_name,
+                    value=val,
+                    unit=unit,
+                    reference_range=ref_range,
+                    flag=flag,
+                    raw_line=f"{display_name} {val} {unit}",
+                    confidence=0.95
+                )
+                results.append(lab_val)
+                logger.info(f"Extracted Lab Value (via fallback): {display_name} = {val} {unit} [{flag}]")
+        except Exception as exc:
+            logger.warning(f"Fallback extraction failed: {exc}")
+
     return results

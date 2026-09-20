@@ -1,355 +1,1347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MedExplain AI — Agentic Medical Report Explainer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MedExplain AI - Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Noto+Sans+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg-dark: #090d16;
-      --card-bg: rgba(17, 24, 39, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --primary: #6366f1;
-      --primary-glow: rgba(99, 102, 241, 0.25);
-      --accent: #8b5cf6;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --high-color: #ef4444;
-      --high-bg: rgba(239, 68, 68, 0.15);
-      --low-color: #f59e0b;
-      --low-bg: rgba(245, 158, 11, 0.15);
-      --normal-color: #10b981;
-      --normal-bg: rgba(16, 185, 129, 0.15);
+      /* Base Colors */
+      --bg-base: #0B1220;
+      --bg-surface: #121B2E;
+      --bg-nested: #16213A;
+      --border-color: #223049;
+      
+      /* Text Colors */
+      --text-primary: #E7ECF5;
+      --text-muted: #8592AC;
+      
+      /* Accent Colors */
+      --accent-blue: #4FA6FF;
+      --accent-blue-hover: #3b82f6;
+      --accent-amber: #F2A93B;
+      --accent-red: #F0575A;
+      --accent-green: #3FD68C;
+
+      /* Typography */
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-heading: 'Manrope', system-ui, sans-serif;
+      --font-sinhala: 'Noto Sans Sinhala', system-ui, sans-serif;
+
+      /* Radii */
+      --radius-pill: 9999px;
+      --radius-card: 14px;
+      --radius-panel: 10px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background-image: 
-        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.12) 0%, transparent 40%);
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    header {
-      padding: 1.5rem 2rem;
-      border-bottom: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
+    .sinhala-text { font-family: var(--font-sinhala); }
+
+    /* Icons (Inline SVG) */
+    .icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .icon-sm { width: 1rem; height: 1rem; }
+
+    /* Buttons & Badges */
+    button {
+      font-family: inherit;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: 2px;
+    }
+
+    .pill-btn {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .pill-btn:hover { background-color: var(--bg-nested); }
+    .pill-btn.primary { background-color: var(--accent-blue); color: #0B1220; border-color: var(--accent-blue); }
+    .pill-btn.primary:hover { background-color: var(--accent-blue-hover); border-color: var(--accent-blue-hover); }
+    .pill-btn.danger { background-color: rgba(240, 87, 90, 0.1); color: var(--accent-red); border-color: rgba(240, 87, 90, 0.3); }
+    .pill-btn.danger:hover { background-color: rgba(240, 87, 90, 0.2); }
+    
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .status-dot.green { background-color: var(--accent-green); }
+    .status-dot.amber { background-color: var(--accent-amber); }
+    .status-dot.red { background-color: var(--accent-red); }
+
+    .status-flag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.05em;
+    }
+    .status-flag.normal { color: var(--accent-green); background: rgba(63, 214, 140, 0.1); border: 1px solid rgba(63, 214, 140, 0.2); }
+    .status-flag.slightly-high, .status-flag.high { color: var(--accent-red); background: rgba(240, 87, 90, 0.1); border: 1px solid rgba(240, 87, 90, 0.2); }
+    .status-flag.low { color: var(--accent-amber); background: rgba(242, 169, 59, 0.1); border: 1px solid rgba(242, 169, 59, 0.2); }
+
+    /* Layout */
+    .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
-    .logo-box { display: flex; align-items: center; gap: 0.75rem; }
-    .logo-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.25rem; font-weight: bold; box-shadow: 0 0 20px var(--primary-glow);
-    }
-    .logo-text { font-family: 'Outfit', sans-serif; font-size: 1.35rem; font-weight: 700; }
-    .badge-tag {
-      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);
-      color: #a5b4fc; font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 20px;
-    }
-
-    main { flex: 1; max-width: 1200px; width: 100%; margin: 0 auto; padding: 2rem 1.5rem; }
-
-    .hero-section { text-align: center; margin-bottom: 2.5rem; }
-    .hero-title { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .hero-title span { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-desc { color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 1rem; line-height: 1.6; }
-
-    /* Upload Box */
-    .upload-card {
-      background: var(--card-bg); border: 2px dashed rgba(99, 102, 241, 0.3);
-      border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center;
-      transition: all 0.3s ease; cursor: pointer; backdrop-filter: blur(12px);
-      margin-bottom: 2rem; position: relative;
-    }
-    .upload-card:hover, .upload-card.dragover {
-      border-color: var(--primary); background: rgba(99, 102, 241, 0.05);
-      box-shadow: 0 0 30px var(--primary-glow);
-    }
-    .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .upload-btn {
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: white; border: none; padding: 0.75rem 1.75rem; border-radius: 8px;
-      font-weight: 600; cursor: pointer; margin-top: 1rem; transition: transform 0.2s;
-    }
-    .upload-btn:hover { transform: translateY(-2px); }
-
-    /* Sample Quick Select Buttons */
-    .samples-bar {
-      display: flex; gap: 1rem; justify-content: center; align-items: center;
-      flex-wrap: wrap; margin-bottom: 2.5rem;
-    }
-    .sample-chip {
-      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--card-border);
-      color: var(--text-muted); padding: 0.5rem 1.25rem; border-radius: 30px;
-      cursor: pointer; transition: all 0.2s; font-size: 0.875rem; font-weight: 500;
-    }
-    .sample-chip:hover {
-      background: rgba(99, 102, 241, 0.15); border-color: var(--primary); color: white;
-    }
-
-    /* Pipeline Status Stepper */
-    .pipeline-status {
-      display: none; background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;
-    }
-    .pipeline-status.active { display: block; }
-    .stepper-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .step-item {
-      background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 10px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;
-    }
-    .step-item.running { border-color: var(--primary); background: rgba(99, 102, 241, 0.1); }
-    .step-item.completed { border-color: var(--normal-color); background: rgba(16, 185, 129, 0.08); }
-    .step-num {
-      width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.1);
-      display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700;
-    }
-    .step-item.completed .step-num { background: var(--normal-color); color: #000; }
-
-    /* Results Section */
-    .results-container { display: none; margin-top: 2rem; }
-    .results-container.active { display: block; }
+    .top-left { display: flex; flex-direction: column; }
+    .breadcrumb { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+    .brand-name { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: var(--text-primary); }
+    .top-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     
-    .meta-box {
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;
-      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    .top-right select {
+      background-color: transparent;
+      color: var(--accent-blue);
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.85rem;
+      font-weight: 600;
+      appearance: none;
+      cursor: pointer;
     }
-    .meta-item label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .meta-item val { font-size: 1.1rem; font-weight: 600; display: block; margin-top: 0.25rem; }
+    .top-right select option { background: var(--bg-surface); color: var(--text-primary); }
 
-    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.25rem; }
-    .biomarker-card {
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 14px; padding: 1.25rem; transition: transform 0.2s, border-color 0.2s;
+    .role-pill {
+      background: rgba(79, 166, 255, 0.1);
+      color: var(--accent-blue);
+      border: 1px solid rgba(79, 166, 255, 0.2);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: none;
     }
-    .biomarker-card:hover { transform: translateY(-3px); border-color: rgba(99, 102, 241, 0.4); }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-    .test-name { font-weight: 600; font-size: 1.05rem; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* Headers */
+    h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; }
+    .page-title { font-size: 2.25rem; margin-bottom: 0.25rem; }
+    .page-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+
+    /* Filters (Pill Tabs) */
+    .filter-row { display: flex; gap: 0.5rem; margin-bottom: 2rem; overflow-x: auto; padding-bottom: 0.5rem; }
+    .filter-tab {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .filter-tab:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+    .filter-tab.active { background: var(--accent-blue); color: #0B1220; border-color: var(--accent-blue); }
+
+    /* Cards */
+    .hero-card {
+      background-color: var(--bg-surface);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background-color: var(--accent-blue);
+    }
+    .hero-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .hero-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--accent-blue);
+      background: rgba(79, 166, 255, 0.1);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-pill);
+    }
+    .hero-text { font-size: 1rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 1.5rem; }
+    .hero-disclaimer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .result-card {
+      background-color: var(--bg-surface);
+      border-radius: var(--radius-card);
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .result-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .result-card-title { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+    .result-value-row { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.5rem; }
+    .result-val { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; line-height: 1; }
+    .result-unit { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+    .result-ref { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .result-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
     
-    .flag-badge {
-      font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 20px; text-transform: uppercase;
+    .card-expand-btn {
+      background: transparent; color: var(--accent-blue); border: none; font-size: 0.85rem; font-weight: 600; padding: 0; margin-top: 1rem; text-decoration: none;
     }
-    .flag-HIGH { background: var(--high-bg); color: var(--high-color); border: 1px solid rgba(239, 68, 68, 0.4); }
-    .flag-LOW { background: var(--low-bg); color: var(--low-color); border: 1px solid rgba(245, 158, 11, 0.4); }
-    .flag-NORMAL { background: var(--normal-bg); color: var(--normal-color); border: 1px solid rgba(16, 185, 129, 0.4); }
+    .card-expand-btn:hover { text-decoration: underline; }
 
-    .val-display { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .ref-range { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
-    .explanation-box {
-      background: rgba(0, 0, 0, 0.25); border-radius: 8px; padding: 0.85rem;
-      font-size: 0.875rem; line-height: 1.5; color: #cbd5e1; border-left: 3px solid var(--primary);
+    .expanded-content {
+      display: none;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--border-color);
+      font-size: 0.9rem;
+      color: var(--text-primary);
     }
+    .expanded-content.open { display: block; }
+    .expanded-content p { margin-bottom: 0.75rem; }
 
-    .disclaimer-banner {
-      margin-top: 2.5rem; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25);
-      border-radius: 12px; padding: 1.25rem; text-align: center; color: #fbbf24; font-size: 0.85rem; line-height: 1.5;
+    /* Banners */
+    .security-banner {
+      background-color: rgba(242, 169, 59, 0.05);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: var(--radius-panel);
+      padding: 1rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
     }
+    .security-banner .icon { color: var(--accent-amber); width: 1.5rem; height: 1.5rem; flex-shrink: 0; }
+    .security-banner-text { font-size: 0.9rem; color: var(--text-primary); line-height: 1.5; }
 
-    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--card-border); color: var(--text-muted); font-size: 0.85rem; }
+    /* Tables */
+    .data-panel { background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-card); overflow: hidden; }
+    .data-panel-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--bg-nested); }
+    .data-search {
+      background-color: var(--bg-base); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.5rem 1rem; border-radius: var(--radius-pill); font-size: 0.85rem; width: 250px;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 1rem 1.5rem; font-size: 0.9rem; border-bottom: 1px solid var(--border-color); }
+    th { font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background-color: var(--bg-nested); }
+
+    /* Forms */
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .form-control {
+      width: 100%; background-color: var(--bg-nested); border: 1px solid var(--border-color); color: var(--text-primary);
+      padding: 0.75rem 1rem; border-radius: var(--radius-panel); font-size: 0.95rem; font-family: var(--font-body);
+    }
+    .form-control::placeholder { color: var(--text-muted); }
+    .form-row { display: flex; gap: 1rem; }
+    .form-row .form-group { flex: 1; }
+    .form-footerText { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; display: flex; gap: 0.5rem; align-items: flex-start;}
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(11, 18, 32, 0.85); backdrop-filter: blur(4px);
+      display: none; justify-content: center; align-items: center; z-index: 100;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-card);
+      width: 100%; max-width: 500px; max-height: 90vh; display: flex; flex-direction: column;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); background-color: var(--bg-nested); border-radius: var(--radius-card) var(--radius-card) 0 0;}
+    .modal-header h3 { font-size: 1.1rem; }
+    .modal-close { background: transparent; color: var(--text-muted); padding: 0.5rem; border-radius: var(--radius-pill); }
+    .modal-close:hover { background: var(--border-color); color: var(--text-primary); }
+    .modal-body { padding: 1.5rem; overflow-y: auto; flex: 1; }
+    .modal-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;}
+    .m-tab { background: transparent; color: var(--text-muted); font-weight: 600; font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: var(--radius-pill); }
+    .m-tab:hover { color: var(--text-primary); }
+    .m-tab.active { background: var(--bg-nested); color: var(--text-primary); }
+    
+    .source-attr { font-size: 0.8rem; color: var(--text-muted); font-style: italic; border-top: 1px solid var(--border-color); padding-top: 0.75rem; margin-top: 1.5rem; }
+
+    /* Upload box on dashboard */
+    .upload-box {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-card);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .upload-box:hover { border-color: var(--accent-blue); background-color: rgba(79, 166, 255, 0.05); }
+
+    /* Views */
+    #patientView, #labView, #uploadView { display: none; }
+    
+    .alert-msg { padding: 0.75rem 1rem; border-radius: var(--radius-panel); font-size: 0.85rem; margin-bottom: 1rem; display: none; }
+    .alert-error { background: rgba(240, 87, 90, 0.1); border: 1px solid rgba(240, 87, 90, 0.3); color: var(--accent-red); }
+    .alert-success { background: rgba(63, 214, 140, 0.1); border: 1px solid rgba(63, 214, 140, 0.2); color: var(--accent-green); }
+
+    @media (max-width: 640px) {
+      .top-bar { padding: 1rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .results-grid { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; gap: 0; }
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo-box">
-      <div class="logo-icon">🩺</div>
-      <div class="logo-text">MedExplain AI</div>
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="breadcrumb" id="uiBreadcrumbs">My Reports / Lab Results</div>
+      <div class="brand-name">MedExplain AI</div>
     </div>
-    <span class="badge-tag">IT3041 Multi-Agent System</span>
+    <div class="top-right">
+      <div id="userProfileBadge" class="role-pill"></div>
+      <button class="pill-btn" id="labPortalBtn" style="display:none;" onclick="switchMainView('labView')">
+        <svg class="icon icon-sm"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+        Lab Portal
+      </button>
+      <button class="pill-btn" id="patientPortalBtn" style="display:none;" onclick="switchMainView('patientView')">
+        <svg class="icon icon-sm"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        My Reports
+      </button>
+      <button class="pill-btn" id="authBtn" onclick="openAuthModal('login')">
+        <svg class="icon icon-sm"><path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+        Sign In
+      </button>
+      <button class="pill-btn danger" id="logoutBtn" style="display:none;" onclick="logout()">
+        <svg class="icon icon-sm"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+        Logout
+      </button>
+      <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+        <option value="en">EN (English)</option>
+        <option value="si">SI (සිංහල)</option>
+      </select>
+    </div>
   </header>
 
   <main>
-    <section class="hero-section">
-      <h1 class="hero-title">Understand Your Lab Reports in <span>Plain English</span></h1>
-      <p class="hero-desc">Upload your medical blood test PDF or test sample report panels to experience our Multi-Agent AI system in real time.</p>
-    </section>
-
-    <!-- Upload Box -->
-    <div class="upload-card" id="uploadDropzone">
-      <div class="upload-icon">📄</div>
-      <h3>Drag & Drop your Lab Report PDF here</h3>
-      <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.35rem;">Supports standard PDF clinical lab reports (CBC, Lipid Panel, Metabolic Panel)</p>
-      <input type="file" id="fileInput" accept=".pdf" style="display: none;" />
-      <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Select PDF File</button>
-    </div>
-
-    <!-- Quick Samples -->
-    <div class="samples-bar">
-      <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 500;">Or try sample panel:</span>
-      <button class="sample-chip" onclick="analyzeSample('cbc')">⚡ Complete Blood Count (CBC)</button>
-      <button class="sample-chip" onclick="analyzeSample('lipid')">⚡ Lipid Profile Panel</button>
-      <button class="sample-chip" onclick="analyzeSample('metabolic')">⚡ Metabolic Panel (CMP)</button>
-    </div>
-
-    <!-- Stepper Status -->
-    <div class="pipeline-status" id="pipelineStatus">
-      <h4 style="margin-bottom: 1rem; font-size: 0.95rem; font-weight: 600; color: #a5b4fc;">🤖 Agent Orchestration Pipeline</h4>
-      <div class="stepper-grid">
-        <div class="step-item" id="step1">
-          <div class="step-num">1</div>
-          <div>
-            <div style="font-weight: 600; font-size: 0.85rem;">Document Agent</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">PyMuPDF Ingestion</div>
-          </div>
-        </div>
-        <div class="step-item" id="step2">
-          <div class="step-num">2</div>
-          <div>
-            <div style="font-weight: 600; font-size: 0.85rem;">NLP Extraction</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Regex & Tabular Parser</div>
-          </div>
-        </div>
-        <div class="step-item" id="step3">
-          <div class="step-num">3</div>
-          <div>
-            <div style="font-weight: 600; font-size: 0.85rem;">Gemini LLM Agent</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Patient Explanation</div>
-          </div>
-        </div>
-        <div class="step-item" id="step4">
-          <div class="step-num">4</div>
-          <div>
-            <div style="font-weight: 600; font-size: 0.85rem;">Database Agent</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">SQL Data Persistence</div>
-          </div>
-        </div>
+    
+    <!-- Upload Initial View -->
+    <div id="uploadView" style="display:block;">
+      <h1 class="page-title" id="t-welcome">Understand Your Lab Reports</h1>
+      <p class="page-subtitle" id="t-welcome-sub">Upload your report for a secure, AI-powered explanation.</p>
+      
+      <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+        <svg class="icon" style="width:48px;height:48px;color:var(--text-muted);margin-bottom:1rem;"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+        <p style="font-weight:600;" id="t-upload-box">Click to browse or drag PDF here</p>
+      </div>
+      <input type="file" id="fileInput" accept="application/pdf" style="display:none;" onchange="handleFileUpload(event)">
+      
+      <div style="display:flex; justify-content:center; gap:1rem; margin-top:2rem;">
+        <button class="pill-btn" onclick="analyzeSample('cbc')" id="t-try-cbc">Try CBC Sample</button>
+        <button class="pill-btn" onclick="analyzeSample('lipid')" id="t-try-lipid">Try Lipid Panel</button>
+      </div>
+      
+      <div id="loadingIndicator" style="display:none; text-align:center; padding: 3rem;">
+        <svg class="icon" style="width:32px;height:32px; animation: spin 1s linear infinite; color:var(--accent-blue);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-dasharray="32" stroke-linecap="round"></circle></svg>
+        <p style="margin-top:1rem;color:var(--text-muted);" id="t-analyzing">Analyzing your results...</p>
       </div>
     </div>
 
-    <!-- Results Section -->
-    <div class="results-container" id="resultsContainer">
-      <div class="meta-box">
-        <div class="meta-item">
-          <label>Patient Name</label>
-          <val id="metaPatient">-</val>
+    <!-- Patient Dashboard View  (PAGE 1) -->
+    <div id="patientView">
+      <div id="demoBanner" style="display:none; margin-bottom: 2rem; background-color: rgba(79, 166, 255, 0.05); border-left: 4px solid var(--accent-blue);" class="security-banner">
+        <svg class="icon" style="color: var(--accent-blue)"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div class="security-banner-text" style="flex: 1;">
+          <strong>Demo view</strong> — shown by lab staff. Log in to save and revisit your reports.
         </div>
-        <div class="meta-item">
-          <label>Report Date</label>
-          <val id="metaDate">-</val>
+        <button class="modal-close" style="padding: 0.2rem;" onclick="this.parentElement.style.display='none'"><svg class="icon"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
+      </div>
+      <h1 class="page-title" id="t-ph-title">Your Lab Report</h1>
+      <p class="page-subtitle" id="t-ph-sub">Report analyzed just now</p>
+
+      <div class="hero-card">
+        <div class="hero-header">
+          <h3><svg class="icon" style="color:var(--accent-blue);"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> <span id="t-ai-summary-title" style="color:var(--accent-blue);">AI Summary</span></h3>
+          <div class="hero-badge" id="t-badge-ai">AI-GENERATED</div>
         </div>
-        <div class="meta-item">
-          <label>Panel Type</label>
-          <val id="metaPanel">-</val>
+        <div class="hero-text" id="aiSummaryText">
+          Loading summary...
         </div>
-        <div class="meta-item">
-          <label>Biomarkers Evaluated</label>
-          <val id="metaTotal">-</val>
+        <div class="hero-disclaimer">
+          <svg class="icon icon-sm"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          <span id="t-disclaimer">This is not a medical diagnosis. Always discuss unexpected results with your healthcare provider.</span>
         </div>
-        <div class="meta-item">
-          <label>Attention Needed</label>
-          <val id="metaAbnormal" style="color: var(--high-color);">-</val>
+        <div style="margin-top:1.5rem; display:flex; gap:1rem;">
+          <button class="pill-btn primary" onclick="openCareGuideModal()" id="t-btn-care-guide">
+            <svg class="icon icon-sm"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            Lifestyle Care Guide
+          </button>
         </div>
       </div>
 
-      <div class="grid-cards" id="biomarkersGrid"></div>
+      <div class="filter-row" id="filterContainer">
+        <button class="filter-tab active" onclick="setFilter('all', this)" id="t-f-all">All Tests</button>
+        <button class="filter-tab" onclick="setFilter('blood', this)" id="t-f-blood">Blood Panel</button>
+        <button class="filter-tab" onclick="setFilter('lipid', this)" id="t-f-lipid">Lipid Profile</button>
+        <button class="filter-tab" onclick="setFilter('history', this)" id="t-f-hist">History</button>
+      </div>
 
-      <div class="disclaimer-banner">
-        ⚠️ <strong>Responsible AI Safety Disclaimer:</strong> MedExplain AI provides educational explanations of laboratory data for informational purposes only. It is not a diagnostic tool and does not replace professional medical advice, diagnosis, or treatment from a qualified physician.
+      <div class="results-grid" id="cardList">
+        <!-- populated by JS -->
+      </div>
+      
+      <div style="margin-top: 3rem; text-align: center;">
+        <button class="pill-btn" onclick="resetApp()" id="t-btn-another">Upload Another Report</button>
+      </div>
+    </div>
+
+
+    <!-- Lab Assistant Portal View (PAGE 2) -->
+    <div id="labView">
+      <h1 class="page-title">Lab Assistant Portal</h1>
+      <p class="page-subtitle">Manage patient test records and upload raw lab results.</p>
+
+      <div class="security-banner">
+        <svg class="icon"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        <div class="security-banner-text">
+          <strong>Security Policy Enforcement:</strong> Lab Assistants are granted management access to raw analyte measurements but are strictly restricted from viewing AI-generated patient explanations & summaries.
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-tab active" id="tabLabManage" onclick="switchLabTab('manage')">Managed Test Records</button>
+        <button class="filter-tab" id="tabLabUpload" onclick="switchLabTab('upload')">Upload New Result</button>
+      </div>
+
+      <!-- Manage Tests Table -->
+      <div id="labManageSec" class="data-panel">
+        <div class="data-panel-header">
+          <h3 style="font-size:1rem;color:var(--text-primary);">Recent Records</h3>
+          <input type="text" class="data-search" placeholder="Search Patient ID..." id="labSearch" oninput="renderLabTestsTable()">
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Patient ID</th>
+                <th>Test</th>
+                <th>Value</th>
+                <th>Uploaded</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="labTestList">
+              <!-- JS Populated -->
+              <tr><td colspan="6" style="text-align:center;">Loading records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Upload Form -->
+      <div id="labUploadSec" class="data-panel" style="display:none; padding:2rem;">
+        <h3 style="margin-bottom: 1.5rem;">Submit Raw Analyte Data</h3>
+
+        <div class="modal-tabs" style="border: 1px solid var(--border-color); background: var(--bg-surface); border-radius: var(--radius-pill); padding: 0.25rem; margin-bottom: 1.5rem; display:flex;">
+          <button class="m-tab active" id="modeManualBtn" style="flex:1;" onclick="switchUploadMode('manual')">Manual Entry</button>
+          <button class="m-tab" id="modePdfBtn" style="flex:1;" onclick="switchUploadMode('pdf')">Upload PDF Report</button>
+        </div>
+
+        <div class="form-row" id="labPdfUploadZone" style="display:none; margin-bottom: 2rem;">
+          <div class="upload-box" style="width: 100%; border: 2px dashed var(--accent-blue); padding: 3rem;" onclick="document.getElementById('labPdfInput').click()">
+            <svg class="icon" style="width:48px;height:48px;color:var(--text-muted);margin-bottom:1rem;"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            <p style="font-weight:600;">Click to browse or drag PDF here (<10MB)</p>
+          </div>
+          <input type="file" id="labPdfInput" accept="application/pdf" style="display:none;" onchange="handleLabPdfUpload(event)">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="flex: 2;">
+            <label>Target Patient ID</label>
+            <input type="text" id="labTargetPatientId" class="form-control" placeholder="PT-#####">
+          </div>
+          <div class="form-group" style="flex: 3;">
+            <label>Test Category</label>
+            <select id="labTestType" class="form-control">
+               <option value="">Select test...</option>
+              <option value="CBC">Complete Blood Count (CBC)</option>
+              <option value="Lipid Panel">Lipid Profile</option>
+              <option value="Metabolic">Metabolic Panel</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Items Container -->
+        <div id="labTestItemsContainer" style="margin-top: 1rem;">
+            <!-- Rendered by JS -->
+        </div>
+
+        <button class="pill-btn primary" onclick="addManualTestItem()" style="margin-bottom: 2rem; background: var(--bg-nested); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: var(--radius-pill); padding: 0.5rem 1rem;">
+          + Add Parameter
+        </button>
+
+        <div class="form-group">
+          <label>Internal Note (Optional)</label>
+          <textarea id="labInternalNote" class="form-control" rows="2" placeholder='Administrative note...'></textarea>
+        </div>
+        
+        <div class="form-footerText" style="padding-top:1rem; border-top:1px solid var(--border-color);">
+          <svg class="icon icon-sm" style="color:var(--text-muted);"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Input is validated and sanitized server-side. Once submitted, AI summarization runs synchronously.
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:1rem; align-items: center;">
+          <button class="pill-btn primary" id="btnDemoPatientUpload" style="display:none;" onclick="">Demo to Patient</button>
+          <button class="pill-btn" onclick="previewPatientAI()">Preview Patient View</button>
+          <button class="pill-btn primary" id="btnSubmitResult" onclick="submitLabUpload()">Submit Result</button>
+        </div>
       </div>
     </div>
   </main>
 
-  <footer>
-    MedExplain AI &copy; 2026 — IT3041 Information Retrieval & Web Analytics Group Project
-  </footer>
+  <!-- Modals -->
+  
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="authModalOverlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="authModalTitle">Sign In</h3>
+        <button class="modal-close" onclick="closeAuthModal()"><svg class="icon"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-tabs" style="border: 1px solid var(--border-color); background: var(--bg-base); border-radius: var(--radius-pill); padding: 0.25rem;">
+          <button class="m-tab active" id="authTabLogin" style="flex:1;" onclick="switchAuthTab('login')">Sign In</button>
+          <button class="m-tab" id="authTabSignup" style="flex:1;" onclick="switchAuthTab('signup')">Register</button>
+        </div>
+
+        <div class="alert-msg" id="authAlert"></div>
+
+        <form onsubmit="handleAuthSubmit(event)">
+          <div id="authFullNameGroup" class="form-group" style="display:none;">
+            <label>Full Name</label>
+            <input type="text" id="authFullName" class="form-control" placeholder="e.g. Jane Doe">
+          </div>
+          <div id="authRoleGroup" class="form-group" style="display:none;">
+            <label>Select Role</label>
+            <select id="authRole" class="form-control">
+              <option value="patient">Patient</option>
+              <option value="lab_assistant">Lab Assistant / Tech</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="authEmail" class="form-control" required placeholder="name@example.com">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="authPassword" class="form-control" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="pill-btn primary" style="width:100%; margin-top:1rem; padding: 0.75rem;" id="authSubmitBtn">Sign In</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Care Guide Modal -->
+  <div class="modal-overlay" id="careGuideModalOverlay">
+    <div class="modal-card" style="max-width:650px; height: 85vh;">
+      <div class="modal-header">
+        <h3 id="t-cg-title">Lifestyle Care Guide</h3>
+        <button class="modal-close" onclick="document.getElementById('careGuideModalOverlay').classList.remove('open')"><svg class="icon"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
+      </div>
+      <div class="modal-body" id="careGuideContent" style="background:var(--bg-base);">
+        <!-- JS Populated -->
+        <div style="text-align:center; padding: 4rem;">Loading personalized care guide...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB AI PREVIEW MODAL -->
+  <div class="modal-overlay" id="previewModalOverlay">
+    <div class="modal-card" style="max-width: 900px; height: 90vh;">
+      <div class="security-banner" style="border-radius: var(--radius-pill) var(--radius-pill) 0 0; margin-bottom: 0;">
+        <svg class="icon"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div class="security-banner-text">
+          <strong>Preview only</strong> — generated for verification, not saved as viewed by lab staff.
+        </div>
+      </div>
+      <div class="modal-header">
+        <h3>Patient View Preview</h3>
+        <button class="modal-close" onclick="document.getElementById('previewModalOverlay').classList.remove('open')"><svg class="icon"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
+      </div>
+      <div class="modal-body" style="background:var(--bg-base); padding: 2rem;">
+        <!-- Injected PatientDashboard elements via JS -->
+        <div id="previewDashboardContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
 
   <script>
-    const dropzone = document.getElementById('uploadDropzone');
-    const fileInput = document.getElementById('fileInput');
+    let currentData = null;
+    let originalData = null;
+    let currentFilter = 'all';
+    
+    // Auth State
+    let authToken = localStorage.getItem('medexplain_token') || null;
+    let currentUser = JSON.parse(localStorage.getItem('medexplain_user') || 'null');
+    let currentAuthMode = 'login';
 
-    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
-    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
-    dropzone.addEventListener('drop', (e) => {
-      e.preventDefault(); dropzone.classList.remove('dragover');
-      if (e.dataTransfer.files.length) uploadFile(e.dataTransfer.files[0]);
+    const STRINGS = {
+      en: {
+        bc: "My Reports / Lab Results",
+        welcome: "Understand Your Lab Reports",
+        wel_sub: "Upload your report for a secure, AI-powered explanation.",
+        box: "Click to browse or drag PDF here",
+        tcbc: "Try CBC Sample", tlip: "Try Lipid Panel",
+        analyzing: "Analyzing your results...",
+        phtitle: "Your Lab Report", phsub: "Report analyzed just now",
+        aiTitle: "AI Summary", aiBadge: "AI-GENERATED",
+        disc: "This is not a medical diagnosis. Always discuss unexpected results with your healthcare provider.",
+        careBtn: "Lifestyle Care Guide",
+        fall: "All Tests", fblood: "Blood Panel", flipid: "Lipid Profile", fhist: "History",
+        fano: "Upload Another Report",
+        cgTitle: "Lifestyle Care Guide",
+        status: { norm: "NORMAL", slightly_high: "SLIGHTLY HIGH", low: "LOW", high: "HIGH" },
+        actions: { exp: "Understand this result →", normMsg: "Status: Parameter is within standard healthy bounds." },
+      },
+      si: {
+        bc: "මගේ වාර්තා / රසායනාගාර ප්‍රතිඵල",
+        welcome: "ඔබේ රසායනාගාර වාර්තා තේරුම් ගන්න",
+        wel_sub: "සුරක්ෂිත, AI-බලගන්වන ලද පැහැදිලි කිරීමක් සඳහා ඔබේ වාර්තාව උඩුගත කරන්න.",
+        box: "ප්‍රවේශ වීමට ක්ලික් කරන්න හෝ පී.ඩී.එෆ් ඇද දමන්න",
+        tcbc: "CBC සාම්පලය අත්හදා බලන්න", tlip: "ලිපිඩ් සාම්පලය අත්හදා බලන්න",
+        analyzing: "ප්‍රතිඵල විශ්ලේෂණය කරමින්...",
+        phtitle: "ඔබේ රසායනාගාර වාර්තාව", phsub: "දැන් විශ්ලේෂණය කරන ලදී",
+        aiTitle: "AI සාරාංශය", aiBadge: "AI-නිපදවන ලද",
+        disc: "මෙය වෛද්‍ය විනිශ්චයක් නොවේ. සෑම විටම වෛද්‍යවරයකු සමඟ සාකච්ඡා කරන්න.",
+        careBtn: "ජීවන රටා සෞඛ්‍ය මාර්ගෝපදේශය",
+        fall: "සියල්ල", fblood: "රුධිර පරීක්ෂණ", flipid: "ලිපිඩ් පැතිකඩ", fhist: "ඉතිහාසය",
+        fano: "තවත් වාර්තාවක් උඩුගත කරන්න",
+        cgTitle: "ජීවන රටා සෞඛ්‍ය මාර්ගෝපදේශය",
+        status: { norm: "සාමාන්‍ය", slightly_high: "වඩාත් ඉහළ", low: "අඩු", high: "ඉහළ" },
+        actions: { exp: "මෙම ප්‍රතිඵලය තේරුම් ගන්න →", normMsg: "තත්වය: පරාමිතිය සම්මත සෞඛ්‍ය සම්පන්න සීමාවන් තුළ පවතී." },
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const demoTraceId = urlParams.get('demo_trace_id');
+      
+      if (demoTraceId) {
+        // Enforce demo mode: isolated guest session, clear local auth
+        authToken = null;
+        currentUser = null;
+        initAuthState();
+        document.getElementById('demoBanner').style.display = 'flex';
+        // Hide specific buttons so they don't navigate away or sign in, but keep the Language Selector!
+        ['authBtn', 'labPortalBtn', 'patientPortalBtn', 'logoutBtn', 'userProfileBadge'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+        
+        try {
+          // Fetch ephemeral session
+          const res = await fetch(`/api/v1/demo-session/${demoTraceId}`);
+          if (res.ok) {
+            currentData = await res.json();
+            originalData = JSON.parse(JSON.stringify(currentData));
+            updateLangUI();
+            routeLogic(); 
+            return;
+          } else {
+            alert("Demo session expired or invalid.");
+          }
+        } catch(e) {
+          alert("Network error fetching demo session.");
+        }
+      }
+
+      initAuthState();
+      if (authToken) {
+        try {
+          const res = await fetch('/api/v1/auth/me', { headers: { 'Authorization': `Bearer ${authToken}` } });
+          if (!res.ok) logout();
+        } catch(e){}
+      }
+      routeLogic();
     });
-    fileInput.addEventListener('change', (e) => { if (e.target.files.length) uploadFile(e.target.files[0]); });
 
-    async function uploadFile(file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      runPipelineVisuals();
+    function routeLogic() {
+      ['uploadView', 'patientView', 'labView'].forEach(el => document.getElementById(el).style.display = 'none');
+      document.getElementById('loadingIndicator').style.display = 'none';
 
-      try {
-        const res = await fetch('/api/v1/upload', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (data.success) renderResults(data);
-        else alert('Error: ' + (data.detail || 'Upload failed'));
-      } catch (err) {
-        alert('Server error: ' + err.message);
+      if (currentUser && currentUser.role === 'lab_assistant') {
+        document.getElementById('labView').style.display = 'block';
+        loadLabTests();
+      } else {
+        if(currentData) {
+          document.getElementById('patientView').style.display = 'block';
+          renderCards();
+        } else {
+          document.getElementById('uploadView').style.display = 'block';
+        }
       }
     }
 
-    async function analyzeSample(sampleType) {
-      runPipelineVisuals();
-      try {
-        const res = await fetch(`/api/v1/analyze-sample?sample_name=${sampleType}`, { method: 'POST' });
-        const data = await res.json();
-        if (data.success) renderResults(data);
-        else alert('Error: ' + (data.detail || 'Sample processing failed'));
-      } catch (err) {
-        alert('Server error: ' + err.message);
+    function switchMainView(viewId) {
+      if(viewId === 'labView' && (!currentUser || currentUser.role !== 'lab_assistant')) return;
+      if(viewId === 'patientView' && currentData == null) viewId = 'uploadView';
+      
+      ['uploadView', 'patientView', 'labView'].forEach(el => document.getElementById(el).style.display = 'none');
+      document.getElementById(viewId).style.display = 'block';
+      if(viewId === 'labView') loadLabTests();
+    }
+
+    function resetApp() {
+      currentData = null; originalData = null;
+      document.getElementById('fileInput').value = '';
+      routeLogic();
+    }
+
+    /* Auth */
+    function initAuthState() {
+      const badge = document.getElementById('userProfileBadge');
+      const authBtn = document.getElementById('authBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const labBtn = document.getElementById('labPortalBtn');
+      const patBtn = document.getElementById('patientPortalBtn');
+
+      if (authToken && currentUser) {
+        authBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-flex';
+        badge.style.display = 'inline-flex';
+        badge.innerText = `${currentUser.full_name} (${currentUser.role === 'lab_assistant' ? 'Lab Tech' : 'Patient'})`;
+        
+        labBtn.style.display = currentUser.role === 'lab_assistant' ? 'inline-flex' : 'none';
+        patBtn.style.display = currentUser.role === 'patient' && currentData ? 'inline-flex' : 'none';
+      } else {
+        authBtn.style.display = 'inline-flex';
+        logoutBtn.style.display = 'none';
+        badge.style.display = 'none';
+        labBtn.style.display = 'none';
+        patBtn.style.display = 'none';
       }
     }
 
-    function runPipelineVisuals() {
-      document.getElementById('pipelineStatus').classList.add('active');
-      document.getElementById('resultsContainer').classList.remove('active');
+    function openAuthModal(mode='login') {
+      switchAuthTab(mode);
+      document.getElementById('authModalOverlay').classList.add('open');
+    }
+    function closeAuthModal() { document.getElementById('authModalOverlay').classList.remove('open'); }
+    
+    function switchAuthTab(mode) {
+      currentAuthMode = mode;
+      document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
+      document.getElementById('authTabSignup').classList.toggle('active', mode==='signup');
+      document.getElementById('authFullNameGroup').style.display = mode==='signup' ? 'block' : 'none';
+      document.getElementById('authRoleGroup').style.display = mode==='signup' ? 'block' : 'none';
+      
+      const fnInput = document.getElementById('authFullName');
+      if(mode==='signup') { fnInput.setAttribute('required', 'true'); } 
+      else { fnInput.removeAttribute('required'); }
 
-      ['step1', 'step2', 'step3', 'step4'].forEach(id => {
-        const el = document.getElementById(id);
-        el.className = 'step-item';
+      document.getElementById('authModalTitle').innerText = mode==='signup' ? 'Register Account' : 'Sign In';
+      document.getElementById('authSubmitBtn').innerText = mode==='signup' ? 'Register' : 'Sign In';
+      document.getElementById('authAlert').style.display = 'none';
+    }
+
+    async function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim();
+      const password = document.getElementById('authPassword').value;
+      const alertbox = document.getElementById('authAlert');
+      alertbox.style.display = 'none';
+
+      let endpoint = currentAuthMode === 'signup' ? '/api/v1/auth/signup' : '/api/v1/auth/login';
+      let payload = { email, password };
+      if(currentAuthMode === 'signup') {
+        payload.full_name = document.getElementById('authFullName').value.trim();
+        if(!payload.full_name) {
+           alertbox.style.display = 'block';
+           alertbox.className = 'alert-msg alert-error';
+           alertbox.innerText = 'Full Name is required.';
+           return;
+        }
+        payload.role = document.getElementById('authRole').value;
+      }
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+          authToken = data.access_token;
+          currentUser = data.user;
+          localStorage.setItem('medexplain_token', authToken);
+          localStorage.setItem('medexplain_user', JSON.stringify(currentUser));
+          closeAuthModal();
+          initAuthState();
+          routeLogic();
+        } else {
+          alertbox.style.display = 'block';
+          alertbox.className = 'alert-msg alert-error';
+          alertbox.innerText = data.detail || 'Authentication failed.';
+        }
+      } catch(e) {
+        alertbox.style.display = 'block';
+        alertbox.className = 'alert-msg alert-error';
+        alertbox.innerText = 'Network error.';
+      }
+    }
+
+    function logout() {
+      authToken = null; currentUser = null;
+      localStorage.removeItem('medexplain_token');
+      localStorage.removeItem('medexplain_user');
+      initAuthState();
+      resetApp();
+    }
+
+    /* Core / Upload */
+    async function handleFileUpload(e) {
+      if(!e.target.files[0]) return;
+      doAnalyze('/api/v1/upload', { method:'POST', body: new FormData().append('file', e.target.files[0]) || (() => {let f=new FormData(); f.append('file', e.target.files[0]); return f})() });
+    }
+    async function analyzeSample(name) {
+      doAnalyze(`/api/v1/analyze-sample?sample_name=${name}`, { method:'POST' });
+    }
+    
+    async function doAnalyze(url, opts) {
+      document.getElementById('loadingIndicator').style.display = 'block';
+      try {
+        const res = await fetch(url, opts);
+        const data = await res.json();
+        document.getElementById('loadingIndicator').style.display = 'none';
+        
+        if(data.safety && !data.safety.approved) {
+           alert("Safety Block: " + (data.safety.escalation_message || "Cannot proceed."));
+           return;
+        }
+        currentData = data;
+        originalData = JSON.parse(JSON.stringify(data));
+        document.getElementById('langSelect').value = 'en';
+        updateLangUI();
+        routeLogic();
+      } catch(e) {
+        document.getElementById('loadingIndicator').style.display = 'none';
+        alert("Analysis failed.");
+      }
+    }
+
+    /* Rendering & Language */
+    function setFilter(f, btn) {
+      currentFilter = f;
+      document.querySelectorAll('.filter-tab').forEach(e => e.classList.remove('active'));
+      btn.classList.add('active');
+      
+      // Note: Full complex filtering based on tests requires backend logic. For UI simulation, we rely on flags.
+      renderCards();
+    }
+
+    async function changeLanguage(lang) {
+      if(!currentData) { updateLangUI(); return; }
+      if(lang === 'en') {
+        currentData = JSON.parse(JSON.stringify(originalData));
+        updateLangUI(); renderCards(); return;
+      }
+      
+      if(lang === 'si') {
+        const sumEl = document.getElementById('aiSummaryText');
+        sumEl.innerText = "පරිවර්තනය සකසමින්... (Translating...)";
+        try {
+          const res = await fetch(`/api/v1/translate/${currentData.trace_id}?language=si`, {method:'POST'});
+          const data = await res.json();
+          if(data.explanation || data.items) {
+             if(data.items) {
+               currentData.test_items.forEach(item => {
+                 const match = data.items[(item.test_name||'').trim()] || Object.values(data.items).find(v => v.includes(item.test_name)) || data.items[Object.keys(data.items).find(k=>k.toLowerCase().includes((item.test_name||'').toLowerCase()))];
+                 if(match) item.explanation = match;
+               });
+             }
+             let sumTxt = "ඔබේ සියලුම රෝග විනිශ්චය සම්මතයි.";
+             if(data.explanation) {
+               const lines = data.explanation.split('\n').filter(l=> l.trim() && !l.startsWith('## ') && !l.includes('සාරාංශය') && !l.includes('Summary'));
+               if(lines.length>0) sumTxt = lines.join(' ');
+             }
+             currentData.customSummary = sumTxt;
+             updateLangUI(); renderCards();
+          }
+        } catch(e) {}
+      }
+    }
+
+    function updateLangUI() {
+      const l = document.getElementById('langSelect').value || 'en';
+      const s = STRINGS[l];
+      if(l === 'si') document.body.classList.add('sinhala-text');
+      else document.body.classList.remove('sinhala-text');
+
+      const setT = (id, txt) => { const el = document.getElementById(id); if(el) el.innerText = txt; }
+      setT('uiBreadcrumbs', s.bc);
+      setT('t-welcome', s.welcome); setT('t-welcome-sub', s.wel_sub);
+      setT('t-upload-box', s.box);
+      setT('t-try-cbc', s.tcbc); setT('t-try-lipid', s.tlip);
+      setT('t-analyzing', s.analyzing);
+      setT('t-ph-title', s.phtitle); setT('t-ph-sub', s.phsub);
+      setT('t-ai-summary-title', s.aiTitle); setT('t-badge-ai', s.aiBadge);
+      setT('t-disclaimer', s.disc); setT('t-btn-care-guide', s.careBtn);
+      
+      setT('t-f-all', s.fall); setT('t-f-blood', s.fblood); setT('t-f-lipid', s.flipid); setT('t-f-hist', s.fhist);
+      setT('t-btn-another', s.fano); setT('t-cg-title', s.cgTitle);
+      
+      if(currentData) {
+        let sum = currentData.customSummary || (l==='si' ? "ඔබේ බොහෝ ප්‍රතිඵල සාමාන්‍ය පරාසය තුළ පවතී." : "Most of your results are within the expected range.");
+        setT('aiSummaryText', sum);
+      }
+    }
+
+    function renderCards() {
+      const cont = document.getElementById('cardList');
+      cont.innerHTML = '';
+      const items = currentData.test_items || [];
+      const l = document.getElementById('langSelect').value || 'en';
+      const str = STRINGS[l];
+
+      items.forEach((item, idx) => {
+        let flag = (item.flag||'').toString().toUpperCase();
+        let isAbnormal = flag.includes('HIGH') || flag.includes('LOW');
+        
+        let shouldRender = true;
+        if(currentFilter === 'normal' && isAbnormal) shouldRender = false;
+        if(currentFilter === 'abnormal' && !isAbnormal) shouldRender = false;
+        if(currentFilter === 'history') shouldRender = false; // Mock feature
+        if(currentFilter === 'blood' && !item.test_name.toLowerCase().includes('blood') && !item.test_name.toLowerCase().includes('cbc')) shouldRender = false;
+        if(currentFilter === 'lipid' && !item.test_name.toLowerCase().includes('lipid') && !item.test_name.toLowerCase().includes('cholesterol')) shouldRender = false;
+        
+        if(!shouldRender && currentFilter !== 'all') return;
+
+        let statusClass = 'normal'; let statusLbl = str.status.norm;
+        let dotCls = 'green';
+        if(flag.includes('HIGH')) {
+            if(flag.includes('SLIGHTLY')) { statusClass = 'slightly-high'; statusLbl = str.status.slightly_high; dotCls = 'amber'; }
+            else { statusClass = 'high'; statusLbl = str.status.high; dotCls = 'red'; }
+        }
+        else if(flag.includes('LOW')) { statusClass = 'low'; statusLbl = str.status.low; dotCls = 'amber'; }
+
+        const expTxt = item.explanation || str.actions.normMsg;
+
+        cont.insertAdjacentHTML('beforeend', `
+          <div class="result-card">
+            <div class="result-card-header">
+              <div class="result-card-title"><span class="status-dot ${dotCls}"></span> ${item.test_name||'Unknown'}</div>
+              <div class="status-flag ${statusClass}">${statusLbl}</div>
+            </div>
+            <div class="result-value-row">
+              <div class="result-val">${item.value||'-'}</div>
+              <div class="result-unit">${item.unit||''}</div>
+            </div>
+            <div class="result-ref">${l==='si'?'සාමාන්‍ය පරාසය':'Reference range'}: ${item.reference_range||'N/A'}</div>
+            
+            <div class="result-footer">
+              <button class="card-expand-btn" onclick="document.getElementById('exp-${idx}').classList.toggle('open')">${str.actions.exp}</button>
+            </div>
+            <div class="expanded-content" id="exp-${idx}">
+              ${formatTxt(expTxt)}
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    function formatTxt(t) { return t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '<br><br>'); }
+
+    /* Care Guide */
+    async function openCareGuideModal() {
+      document.getElementById('careGuideModalOverlay').classList.add('open');
+      const box = document.getElementById('careGuideContent');
+      box.innerHTML = '<div style="text-align:center;padding:4rem;"><svg class="icon" style="width:32px;height:32px;animation: spin 1s linear infinite;color:var(--accent-blue);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-dasharray="32" stroke-linecap="round"></circle></svg> <div style="margin-top:1rem;color:var(--text-muted);">Loading personalized care guide...</div></div>';
+      
+      if (!currentData || !currentData.trace_id) {
+         box.innerHTML = '<div style="padding:3rem; text-align:center; color:var(--text-muted);">No active lab report session loaded. Please analyze a report first.</div>';
+         return;
+      }
+
+      const l = document.getElementById('langSelect').value || 'en';
+      try {
+         const res = await fetch(`/api/v1/care-guide/${currentData.trace_id}?language=${l}`, {method:'POST'});
+         if(res.ok) {
+           const data = await res.json();
+           const keys = (data.sections && typeof data.sections === 'object') ? Object.keys(data.sections) : [];
+           
+           if (data.verified === false || keys.length === 0) {
+             const msg = data.message || "No lifestyle guidance available for the tests on this report. Always consult your physician.";
+             box.innerHTML = `<div style="padding:3rem 2rem; text-align:center; color:var(--text-primary);">
+               <svg class="icon" style="width:40px;height:40px;color:var(--accent-amber);margin-bottom:1rem;" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+               <div style="font-size:0.95rem; line-height:1.6; max-width:480px; margin:0 auto;">${msg}</div>
+             </div>`;
+             return;
+           }
+
+           let html = '<div class="modal-tabs" style="display:flex; flex-wrap:wrap; gap:0.25rem;">';
+           keys.forEach((k,i) => {
+              const title = (data.section_titles && data.section_titles[k]) ? data.section_titles[k] : k;
+              html += `<button class="m-tab ${i===0?'active':''}" onclick="switchCGTab('${k}', this)">${title}</button>`;
+           });
+           html += '</div>';
+           
+           keys.forEach((k,i) => {
+              const items = data.sections[k] || [];
+              html += `<div id="cg-tab-${k}" style="display:${i===0?'block':'none'}; padding: 1.25rem 0;">`;
+              if (items.length > 0) {
+                html += '<ul style="margin-left:1.5rem; color:var(--text-primary); font-size:0.95rem; line-height: 1.6;">';
+                items.forEach(it => {
+                  const srcTag = it.source ? ` <span style="font-size:0.8rem; color:var(--text-muted); font-style:italic;">— (${it.source})</span>` : '';
+                  html += `<li style="margin-bottom:0.75rem;">${it.text}${srcTag}</li>`;
+                });
+                html += '</ul>';
+              } else {
+                html += '<div style="color:var(--text-muted); font-style:italic; padding: 1rem 0;">No specific guidance items recorded for this section based on current results. Always consult your doctor.</div>';
+              }
+              html += '</div>';
+           });
+           
+           if(data.citations && data.citations.length > 0) {
+             const uniqueSources = [...new Set(data.citations.map(c => c.source || c.title).filter(Boolean))];
+             if (uniqueSources.length > 0) {
+               html += `<div class="source-attr" style="margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">Sources: ${uniqueSources.join(', ')}</div>`;
+             }
+           }
+           box.innerHTML = html;
+         } else {
+           const err = await res.json().catch(() => ({}));
+           box.innerHTML = `<div style="color:var(--accent-red);padding:2.5rem;text-align:center;">${err.detail || 'Failed to generate care guide.'}</div>`;
+         }
+      } catch(e) {
+         box.innerHTML = '<div style="color:var(--accent-red);padding:2.5rem;text-align:center;">Network error fetching care guide. Please try again.</div>';
+      }
+    }
+    function switchCGTab(k, btn) {
+      document.querySelectorAll('#careGuideContent .m-tab').forEach(e=>e.classList.remove('active'));
+      if(btn) btn.classList.add('active');
+      document.querySelectorAll('[id^="cg-tab-"]').forEach(e=>e.style.display='none');
+      document.getElementById('cg-tab-'+k).style.display='block';
+    }
+
+    /* Lab Portal */
+    function switchLabTab(mode) {
+      document.getElementById('tabLabManage').classList.toggle('active', mode==='manage');
+      document.getElementById('tabLabUpload').classList.toggle('active', mode==='upload');
+      document.getElementById('labManageSec').style.display = mode==='manage'?'block':'none';
+      document.getElementById('labUploadSec').style.display = mode==='upload'?'block':'none';
+      
+      const demoBtn = document.getElementById('btnDemoPatientUpload');
+      if (demoBtn) demoBtn.style.display = 'none';
+
+      if(mode==='manage') loadLabTests();
+    }
+
+    let allManagedTests = [];
+
+    async function loadLabTests() {
+      const list = document.getElementById('labTestList');
+      list.innerHTML = '<tr><td colspan="6" style="text-align:center;">Loading...</td></tr>';
+      try {
+        const res = await fetch('/lab/manage-tests', { headers: {'Authorization':`Bearer ${authToken}`} });
+        if(res.ok) {
+          const data = await res.json();
+          allManagedTests = data.managed_tests || [];
+          renderLabTestsTable();
+        } else {
+          list.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--accent-red);">Access Denied (Not logged in as Lab Assistant).</td></tr>';
+        }
+      } catch(e) {
+          list.innerHTML = '<tr><td colspan="6" style="text-align:center;">No records found.</td></tr>';
+      }
+    }
+
+    function renderLabTestsTable() {
+      const list = document.getElementById('labTestList');
+      const searchInput = document.getElementById('labSearch');
+      const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+
+      const filtered = allManagedTests.filter(t => {
+        if (!query) return true;
+        const pidStr = `pt-${t.patient_id}`.toLowerCase();
+        const rawPid = `${t.patient_id}`.toLowerCase();
+        const testType = (t.test_type || '').toLowerCase();
+        return pidStr.includes(query) || rawPid.includes(query) || testType.includes(query);
       });
 
-      document.getElementById('step1').classList.add('running');
-      setTimeout(() => { document.getElementById('step1').classList.replace('running', 'completed'); document.getElementById('step2').classList.add('running'); }, 500);
-      setTimeout(() => { document.getElementById('step2').classList.replace('running', 'completed'); document.getElementById('step3').classList.add('running'); }, 1100);
-      setTimeout(() => { document.getElementById('step3').classList.replace('running', 'completed'); document.getElementById('step4').classList.add('running'); }, 1800);
-      setTimeout(() => { document.getElementById('step4').classList.replace('running', 'completed'); }, 2300);
+      if (filtered.length === 0) {
+        list.innerHTML = '<tr><td colspan="6" style="text-align:center;">No matching records found.</td></tr>';
+        return;
+      }
+
+      let html = '';
+      filtered.forEach(t => {
+        const formattedDate = t.created_at ? new Date(t.created_at).toLocaleDateString() : new Date().toLocaleDateString();
+        html += `<tr>
+          <td><strong>PT-${t.patient_id}</strong></td>
+          <td>${t.test_type}</td>
+          <td style="font-family:monospace; color:var(--text-muted);">-</td>
+          <td style="font-size:0.8rem;">${formattedDate}</td>
+          <td><span class="status-flag processing">Processed</span></td>
+          <td style="white-space:nowrap;">
+            <button class="pill-btn" style="padding:0.25rem 0.5rem;font-size:0.75rem;" onclick="window.open('/?demo_trace_id=${t.trace_id}', '_blank')">View</button>
+            <button class="pill-btn primary" style="padding:0.25rem 0.5rem;font-size:0.75rem; margin-left: 4px;" onclick="window.open('/?demo_trace_id=${t.trace_id}', '_blank')">Demo</button>
+            <button class="pill-btn danger" style="padding:0.25rem 0.5rem;font-size:0.75rem; margin-left: 4px; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);" onclick="deleteLabTest(${t.id})" title="Delete record"><svg class="icon icon-sm" style="width:13px;height:13px;vertical-align:middle;margin-right:2px;"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> Delete</button>
+          </td>
+        </tr>`;
+      });
+      list.innerHTML = html;
     }
 
-    function renderResults(data) {
-      setTimeout(() => {
-        document.getElementById('resultsContainer').classList.add('active');
-        document.getElementById('metaPatient').innerText = data.metadata.patient_name || 'N/A';
-        document.getElementById('metaDate').innerText = data.metadata.report_date || 'N/A';
-        document.getElementById('metaPanel').innerText = data.metadata.panel_type || 'Lab Panel';
-        document.getElementById('metaTotal').innerText = data.total_tests;
-        document.getElementById('metaAbnormal').innerText = `${data.abnormal_count} High/Low`;
-
-        const grid = document.getElementById('biomarkersGrid');
-        grid.innerHTML = '';
-
-        data.test_items.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'biomarker-card';
-          card.innerHTML = `
-            <div class="card-header">
-              <span class="test-name">${item.test_name}</span>
-              <span class="flag-badge flag-${item.flag}">${item.flag}</span>
-            </div>
-            <div class="val-display">${item.value} <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-muted);">${item.unit}</span></div>
-            <div class="ref-range">Reference Range: <code>${item.reference_range}</code></div>
-            <div class="explanation-box">${item.explanation}</div>
-          `;
-          grid.appendChild(card);
+    async function deleteLabTest(reportId) {
+      if (!confirm(`Are you sure you want to delete report record #${reportId}?`)) return;
+      try {
+        const res = await fetch(`/lab/reports/${reportId}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${authToken}` }
         });
+        if (res.ok) {
+          loadLabTests();
+        } else {
+          const err = await res.json();
+          alert(err.detail || 'Failed to delete report record.');
+        }
+      } catch (e) {
+        alert('Network error deleting report record.');
+      }
+    }
 
-        grid.scrollIntoView({ behavior: 'smooth' });
-      }, 2500);
+    let dynamicLabItems = [];
+
+    function switchUploadMode(mode) {
+      document.getElementById('modeManualBtn').classList.toggle('active', mode === 'manual');
+      document.getElementById('modePdfBtn').classList.toggle('active', mode === 'pdf');
+      document.getElementById('labPdfUploadZone').style.display = mode === 'pdf' ? 'block' : 'none';
+      if (mode === 'manual' && dynamicLabItems.length === 0) { addManualTestItem(); }
+    }
+
+    function addManualTestItem(item = { test_name: '', value: '', unit: '', reference_range: '', flag: 'UNKNOWN', confidence: 1.0 }) {
+      dynamicLabItems.push(item);
+      renderDynamicLabItems();
+    }
+
+    function removeManualTestItem(index) {
+      dynamicLabItems.splice(index, 1);
+      renderDynamicLabItems();
+    }
+
+    function validateTestItemInput(index, field, value) {
+      dynamicLabItems[index][field] = value;
+    }
+
+    function renderDynamicLabItems() {
+      const container = document.getElementById('labTestItemsContainer');
+      container.innerHTML = '';
+      dynamicLabItems.forEach((item, index) => {
+        const borderStyle = typeof item.confidence === 'number' && item.confidence < 0.95 ? 'border: 1px solid var(--accent-amber);' : '';
+        const html = `
+          <div class="form-row" style="background: var(--bg-surface); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; ${borderStyle}">
+            <div class="form-group" style="flex: 2;">
+              <label>Parameter ${index+1}</label>
+              <input type="text" class="form-control" value="${item.test_name || ''}" onchange="validateTestItemInput(${index}, 'test_name', this.value)" placeholder="Test Name">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>Value</label>
+              <input type="text" class="form-control" value="${item.value || ''}" onchange="validateTestItemInput(${index}, 'value', this.value)" placeholder="e.g 11.2">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>Unit</label>
+              <input type="text" class="form-control" value="${item.unit || ''}" onchange="validateTestItemInput(${index}, 'unit', this.value)" placeholder="e.g g/dL">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>Reference Range</label>
+              <input type="text" class="form-control" value="${item.reference_range || ''}" onchange="validateTestItemInput(${index}, 'reference_range', this.value)">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>Flag</label>
+              <select class="form-control" onchange="validateTestItemInput(${index}, 'flag', this.value)">
+                <option value="UNKNOWN" ${item.flag==='UNKNOWN'?'selected':''}>Unknown</option>
+                <option value="NORMAL" ${item.flag==='NORMAL'?'selected':''}>Normal</option>
+                <option value="LOW" ${item.flag==='LOW'?'selected':''}>Low</option>
+                <option value="HIGH" ${item.flag==='HIGH'?'selected':''}>High</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex: 0 0 40px; display:flex; align-items:flex-end;">
+              <button class="pill-btn danger" style="padding: 0.5rem;" onclick="removeManualTestItem(${index})"><svg class="icon icon-sm"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+      });
+    }
+
+    async function handleLabPdfUpload(e) {
+      if(!e.target.files[0]) return;
+      document.getElementById('loadingIndicator').style.display = 'block';
+      const formData = new FormData();
+      formData.append('file', e.target.files[0]);
+      try {
+        const res = await fetch('/lab/extract-pdf', {
+          method: 'POST', 
+          headers: {'Authorization':`Bearer ${authToken}`}, 
+          body: formData
+        });
+        const data = await res.json();
+        document.getElementById('loadingIndicator').style.display = 'none';
+        if (res.ok && data.extracted_values) {
+           dynamicLabItems = data.extracted_values;
+           renderDynamicLabItems();
+           alert(`Extracted ${dynamicLabItems.length} parameters from PDF.`);
+        } else {
+           alert(data.detail || 'Extraction failed');
+        }
+      } catch(ex) {
+        document.getElementById('loadingIndicator').style.display = 'none';
+        alert('Network error extracting PDF');
+      }
+    }
+
+    async function previewPatientAI() {
+      const formItems = dynamicLabItems.filter(i => i.test_name);
+      if (formItems.length === 0) { alert('No test items to preview.'); return; }
+      
+      const pid_raw = document.getElementById('labTargetPatientId').value;
+      const ttype = (document.getElementById('labTestType') || {}).value || 'Other';
+      
+      try {
+        const res = await fetch('/lab/preview-ai', {
+          method: 'POST', headers: {'Content-Type':'application/json','Authorization':`Bearer ${authToken}`},
+          body: JSON.stringify({ patient_id: parseInt(pid_raw.replace(/\D/g,'')) || 0, test_type: ttype, raw_results: { items: formItems } })
+        });
+        const data = await res.json();
+        if(res.ok) {
+           // Swap globally and render in the container
+           const oldData = currentData;
+           currentData = data;
+           document.getElementById('previewModalOverlay').classList.add('open');
+           const container = document.getElementById('previewDashboardContainer');
+           // Clean container, inject the same html inside our modal
+           container.innerHTML = `
+             <div class="hero-card">
+               <div class="hero-header">
+                 <h3><svg class="icon" style="color:var(--accent-blue);"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> <span style="color:var(--accent-blue);">AI Summary</span></h3>
+                 <div class="hero-badge">AI-GENERATED</div>
+               </div>
+               <div class="hero-text">${data.customSummary || "Preview summary generated by AI pipeline directly from structured items."}</div>
+             </div>
+             <div class="results-grid" id="previewCardList" style="margin-top:2rem;"></div>
+           `;
+           
+           // Copy logic from renderCards to render into previewCardList
+           const list = document.getElementById('previewCardList');
+           (data.test_items || []).forEach((item, idx) => {
+              let flag = (item.flag||'').toString().toUpperCase();
+              let statusClass = 'normal'; let statusLbl = "NORMAL";
+              let dotCls = 'green';
+              if(flag.includes('HIGH')) {
+                  if(flag.includes('SLIGHTLY')) { statusClass = 'slightly-high'; statusLbl = "SLIGHTLY HIGH"; dotCls = 'amber'; }
+                  else { statusClass = 'high'; statusLbl = "HIGH"; dotCls = 'red'; }
+              } else if(flag.includes('LOW')) { statusClass = 'low'; statusLbl = "LOW"; dotCls = 'amber'; }
+              list.insertAdjacentHTML('beforeend', `
+                <div class="result-card">
+                  <div class="result-card-header"><div class="result-card-title"><span class="status-dot ${dotCls}"></span> ${item.test_name||'Unknown'}</div><div class="status-flag ${statusClass}">${statusLbl}</div></div>
+                  <div class="result-value-row"><div class="result-val">${item.value||'-'}</div><div class="result-unit">${item.unit||''}</div></div>
+                  <div class="result-ref">Reference range: ${item.reference_range||'N/A'}</div>
+                  <div class="result-footer"><button class="card-expand-btn" onclick="document.getElementById('prev-exp-${idx}').classList.toggle('open')">Understand this result →</button></div>
+                  <div class="expanded-content" id="prev-exp-${idx}">${formatTxt(item.explanation || '')}</div>
+                </div>
+              `);
+           });
+           
+           // Restore old data globally
+           currentData = oldData;
+        } else { alert("Failed to generate preview: " + (data.detail || '')); }
+      } catch(e) { alert("Network error generating preview."); }
+    }
+
+    async function submitLabUpload() {
+      const pid_raw = document.getElementById('labTargetPatientId').value;
+      const pid = pid_raw.replace(/\D/g,'');
+      const ttype = (document.getElementById('labTestType') || {}).value || 'Other';
+      
+      const formItems = dynamicLabItems.filter(i => i.test_name);
+      
+      if(!pid || formItems.length === 0) { alert("Missing patient ID or Test parameters."); return; }
+      
+      try {
+        const res = await fetch('/lab/upload-result', {
+          method: 'POST', headers: {'Content-Type':'application/json','Authorization':`Bearer ${authToken}`},
+          body: JSON.stringify({ patient_id: parseInt(pid), test_type: ttype, raw_results: { items: formItems } })
+        });
+        if(res.ok) {
+           const data = await res.json();
+           
+           const demoBtn = document.getElementById('btnDemoPatientUpload');
+           demoBtn.style.display = 'inline-block';
+           demoBtn.onclick = () => window.open(`/?demo_trace_id=${data.trace_id}`, '_blank');
+           
+           alert("Result uploaded successfully! Background generation triggered.");
+           document.getElementById('labTargetPatientId').value = '';
+           if(document.getElementById('labInternalNote')) document.getElementById('labInternalNote').value = '';
+           // We intentionally do not clear dynamicLabItems so the tech can still see what they uploaded before clicking demo
+        } else {
+           const err = await res.json(); alert(err.detail || 'Upload failed');
+        }
+      } catch(e) { alert("Network error"); }
     }
   </script>
 </body>

@@ -1,14 +1,18 @@
-# MedExplain AI - Python dependencies
-# Install:  pip install -r requirements.txt
+# MedExplain AI - minimal dependency set (fast install, ~50 MB)
+#
+# Everything runs with these: the five agents, LangGraph orchestration, the MCP
+# protocol layer, the safety gate and the web app. Retrieval uses the built-in
+# BM25 backend.
+#
+#   pip install -r requirements-core.txt
+#
+# For dense vector retrieval (ChromaDB + sentence-transformers embeddings) use
+# the full requirements.txt instead. That pulls PyTorch and is a ~2 GB download.
 
 # --- Core pipeline ---------------------------------------------------------
 pymupdf>=1.23.0                 # Agent 1: PDF text extraction
-google-genai>=2.0.0             # Agent 4: Gemini API (optional). >=2.0 needed for gemini-3.x thinking_level
 python-dotenv>=1.0.0            # configuration via .env
-
-# --- Information Retrieval (Agent 3) ---------------------------------------
-chromadb>=0.5.0                 # vector store; falls back to built-in BM25 if unavailable
-sentence-transformers>=2.2.0    # all-MiniLM-L6-v2 embeddings; ChromaDB's ONNX MiniLM used if absent
+google-genai>=2.0.0             # Agent 4: Gemini API (optional). >=2.0 needed for gemini-3.x thinking_level
 
 # --- Orchestration & agent communication protocol --------------------------
 langgraph>=0.2.0                # shared-state agent graph with the safety revise edge
@@ -19,9 +23,6 @@ mcp>=1.2.0                      # Model Context Protocol - retrieval exposed as 
 fastapi>=0.110.0
 uvicorn[standard]>=0.27.0
 python-multipart>=0.0.9         # required by FastAPI for file uploads
-
-# --- Persistence -----------------------------------------------------------
-mysql-connector-python>=8.0.0   # SQLite fallback is built in
 
 # --- Sample data generation -------------------------------------------------
 reportlab>=4.0.0                # generate_sample_pdfs.py
