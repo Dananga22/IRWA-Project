@@ -97,7 +97,7 @@ app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 class SignupRequest(BaseModel):
     email: str
     password: str
-    role: Optional[str] = "patient"
+    role: str = Field(default="patient", description="Default role is patient")
     full_name: str
 
 class LoginRequest(BaseModel):

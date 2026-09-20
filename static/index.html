@@ -827,12 +827,22 @@
         } else {
           alertbox.style.display = 'block';
           alertbox.className = 'alert-msg alert-error';
-          alertbox.innerText = data.detail || 'Authentication failed.';
+          let errText = 'Authentication failed.';
+          if (typeof data.detail === 'string') {
+            errText = data.detail;
+          } else if (Array.isArray(data.detail)) {
+            errText = data.detail.map(d => d.msg || d.detail || JSON.stringify(d)).join(', ');
+          } else if (data.detail && typeof data.detail === 'object') {
+            errText = data.detail.msg || data.detail.message || JSON.stringify(data.detail);
+          } else if (data.message) {
+            errText = data.message;
+          }
+          alertbox.innerText = errText;
         }
       } catch(e) {
         alertbox.style.display = 'block';
         alertbox.className = 'alert-msg alert-error';
-        alertbox.innerText = 'Network error.';
+        alertbox.innerText = (e && e.message) ? e.message : 'Network error.';
       }
     }
 
