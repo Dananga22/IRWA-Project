@@ -434,6 +434,13 @@
         <button class="filter-tab" onclick="setFilter('history', this)" id="t-f-hist">History</button>
       </div>
 
+      <div class="filter-row" id="priorityFilterContainer" style="margin-bottom: 2rem;">
+        <button class="filter-tab active" onclick="setPriorityFilter('all', this)" id="pf-all">All</button>
+        <button class="filter-tab" onclick="setPriorityFilter('high', this)" id="pf-high">High</button>
+        <button class="filter-tab" onclick="setPriorityFilter('normal', this)" id="pf-normal">Normal</button>
+        <button class="filter-tab" onclick="setPriorityFilter('low', this)" id="pf-low">Low</button>
+      </div>
+
       <div class="results-grid" id="cardList">
         <!-- populated by JS -->
       </div>
@@ -651,6 +658,7 @@
     let currentData = null;
     let originalData = null;
     let currentFilter = 'all';
+    let currentPriorityFilter = 'all';
     
     // Auth State
     let authToken = localStorage.getItem('medexplain_token') || null;
@@ -912,10 +920,17 @@
     /* Rendering & Language */
     function setFilter(f, btn) {
       currentFilter = f;
-      document.querySelectorAll('.filter-tab').forEach(e => e.classList.remove('active'));
+      document.querySelectorAll('#filterContainer .filter-tab').forEach(e => e.classList.remove('active'));
       btn.classList.add('active');
       
       // Note: Full complex filtering based on tests requires backend logic. For UI simulation, we rely on flags.
+      renderCards();
+    }
+
+    function setPriorityFilter(lvl, btn) {
+      currentPriorityFilter = lvl;
+      document.querySelectorAll('#priorityFilterContainer .filter-tab').forEach(e => e.classList.remove('active'));
+      btn.classList.add('active');
       renderCards();
     }
 
@@ -946,8 +961,18 @@
              }
              currentData.customSummary = sumTxt;
              updateLangUI(); renderCards();
+          } else {
+             alert(data.detail || "Translation is currently unavailable.");
+             let langSel = document.getElementById('langSelect');
+             if (langSel) langSel.value = 'en';
+             changeLanguage('en');
           }
-        } catch(e) {}
+        } catch(e) {
+             alert("Network error occurred while fetching translation.");
+             let langSel = document.getElementById('langSelect');
+             if (langSel) langSel.value = 'en';
+             changeLanguage('en');
+        }
       }
     }
 
@@ -983,7 +1008,8 @@
       const l = document.getElementById('langSelect').value || 'en';
       const str = STRINGS[l];
 
-      items.forEach((item, idx) => {
+      let counts = { all: 0, high: 0, normal: 0, low: 0 };
+      let matchedItems = items.filter((item) => {
         let flag = (item.flag||'').toString().toUpperCase();
         let isAbnormal = flag.includes('HIGH') || flag.includes('LOW');
         
@@ -994,8 +1020,34 @@
         if(currentFilter === 'blood' && !item.test_name.toLowerCase().includes('blood') && !item.test_name.toLowerCase().includes('cbc')) shouldRender = false;
         if(currentFilter === 'lipid' && !item.test_name.toLowerCase().includes('lipid') && !item.test_name.toLowerCase().includes('cholesterol')) shouldRender = false;
         
-        if(!shouldRender && currentFilter !== 'all') return;
+        if(!shouldRender && currentFilter !== 'all') return false;
 
+        counts.all++;
+        let itemPriority = 'normal';
+        if(flag.includes('HIGH')) { itemPriority = 'high'; counts.high++; }
+        else if(flag.includes('LOW')) { itemPriority = 'low'; counts.low++; }
+        else { counts.normal++; }
+        
+        item._derivedPriority = itemPriority;
+        return true;
+      });
+
+      const pAll = document.getElementById('pf-all');
+      if (pAll) pAll.innerText = `All (${counts.all})`;
+      const pHigh = document.getElementById('pf-high');
+      if (pHigh) pHigh.innerText = `High (${counts.high})`;
+      const pNorm = document.getElementById('pf-normal');
+      if (pNorm) pNorm.innerText = `Normal (${counts.normal})`;
+      const pLow = document.getElementById('pf-low');
+      if (pLow) pLow.innerText = `Low (${counts.low})`;
+
+      let renderedCount = 0;
+
+      matchedItems.forEach((item, idx) => {
+        if(currentPriorityFilter !== 'all' && item._derivedPriority !== currentPriorityFilter) return;
+        renderedCount++;
+        
+        let flag = (item.flag||'').toString().toUpperCase();
         let statusClass = 'normal'; let statusLbl = str.status.norm;
         let dotCls = 'green';
         if(flag.includes('HIGH')) {
@@ -1027,6 +1079,13 @@
           </div>
         `);
       });
+
+      if (renderedCount === 0) {
+        let msg = currentPriorityFilter === 'all' 
+          ? "No results found for this category." 
+          : `No ${currentPriorityFilter.charAt(0).toUpperCase() + currentPriorityFilter.slice(1)}-priority results found.`;
+        cont.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem; font-size: 1.1rem; border: 1px dashed var(--border-color); border-radius: var(--radius-card);">${msg}</div>`;
+      }
     }
 
     function formatTxt(t) { return t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '<br><br>'); }
